@@ -1,8 +1,11 @@
+/// Bitboard trait adds functions to an u64 that allow treating it as a chess engine bitboard
 pub trait Bitboard {
+	/// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String;
 }
 
 impl Bitboard for u64 {
+	/// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String {
         let mut bb = *self;
         let mut buff = "".to_string();
