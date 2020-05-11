@@ -20,7 +20,34 @@ for(let rank = 0; rank < NUM_RANKS; rank++){
 	}
 }
 
+const FIGURE_INFO = [
+	["no_figure", "."],
+	["pawn", "p"],
+	["knight", "n"],
+	["bishop", "p"],
+	["rook", "r"],
+	["queen", "q"],
+	["king", "k"],
+	["lancer", "l"],
+	["lancern", "ln"],
+	["lancerne", "lne"],
+	["lancere", "le"],
+	["lancerse", "lse"],
+	["lancers", "ls"],
+	["lancersw", "lsw"],
+	["lancerw", "lw"],
+	["lancernw", "lnw"],
+	["sentry", "s"],
+	["jailer", "j"],
+]
+
+let figBuff = FIGURE_INFO.map((fi, i) => `/// ${fi[0].toUpperCase()} represents chess figure '${fi[0]}'\npub const ${fi[0].toUpperCase()} : Figure = ${i};`)
+
 fs.writeFileSync("gen.txt", `
+pub const FIGURE_FEN_SYMBOLS : [&str; ${FIGURE_INFO.length}] = [${FIGURE_INFO.map(fi => '"' + fi[1] + '"')}];
+
+${figBuff.join("\n")}
+
 ${rankBuff.join("\n")}
 
 ${fileBuff.join("\n")}

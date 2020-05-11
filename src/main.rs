@@ -1,4 +1,5 @@
 use rustenginelib::bitboard::*;
+use rustenginelib::piece::*;
 use rustenginelib::square::*;
 
 fn main() {
@@ -8,5 +9,9 @@ fn main() {
 
     let sq: Square = rank_file(RANK_3, FILE_D);
 
-    println!("square {} file {} rank {}", sq.uci(), sq.file(), sq.rank())
+    println!("square {} file {} rank {}", sq.uci(), sq.file(), sq.rank());
+
+    let fig: Figure = LANCERNE;
+
+    println!("\nfigure {} fen symbol {}", fig, fig.fen_symbol())
 }

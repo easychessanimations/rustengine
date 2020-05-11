@@ -15,40 +15,39 @@ pub const RANK_SHIFT: usize = 3;
 /// FILE_MASK is a mask that has bits set that represent the file within a square
 pub const FILE_MASK: usize = (1 << RANK_SHIFT) - 1;
 
-
 /// RANK_1 represents rank '1' of a chess board
-pub const RANK_1 : Rank = 0;
+pub const RANK_1: Rank = 0;
 /// RANK_2 represents rank '2' of a chess board
-pub const RANK_2 : Rank = 1;
+pub const RANK_2: Rank = 1;
 /// RANK_3 represents rank '3' of a chess board
-pub const RANK_3 : Rank = 2;
+pub const RANK_3: Rank = 2;
 /// RANK_4 represents rank '4' of a chess board
-pub const RANK_4 : Rank = 3;
+pub const RANK_4: Rank = 3;
 /// RANK_5 represents rank '5' of a chess board
-pub const RANK_5 : Rank = 4;
+pub const RANK_5: Rank = 4;
 /// RANK_6 represents rank '6' of a chess board
-pub const RANK_6 : Rank = 5;
+pub const RANK_6: Rank = 5;
 /// RANK_7 represents rank '7' of a chess board
-pub const RANK_7 : Rank = 6;
+pub const RANK_7: Rank = 6;
 /// RANK_8 represents rank '8' of a chess board
-pub const RANK_8 : Rank = 7;
+pub const RANK_8: Rank = 7;
 
 /// FILE_A represents file 'a' of a chess board
-pub const FILE_A : File = 0;
+pub const FILE_A: File = 0;
 /// FILE_B represents file 'b' of a chess board
-pub const FILE_B : File = 1;
+pub const FILE_B: File = 1;
 /// FILE_C represents file 'c' of a chess board
-pub const FILE_C : File = 2;
+pub const FILE_C: File = 2;
 /// FILE_D represents file 'd' of a chess board
-pub const FILE_D : File = 3;
+pub const FILE_D: File = 3;
 /// FILE_E represents file 'e' of a chess board
-pub const FILE_E : File = 4;
+pub const FILE_E: File = 4;
 /// FILE_F represents file 'f' of a chess board
-pub const FILE_F : File = 5;
+pub const FILE_F: File = 5;
 /// FILE_G represents file 'g' of a chess board
-pub const FILE_G : File = 6;
+pub const FILE_G: File = 6;
 /// FILE_H represents file 'h' of a chess board
-pub const FILE_H : File = 7;
+pub const FILE_H: File = 7;
 
 /// SQUARE_A1 represents square 'a1' of a chess board
 pub const SQUARE_A1: Square = 0;
@@ -179,9 +178,8 @@ pub const SQUARE_G8: Square = 62;
 /// SQUARE_H8 represents square 'h8' of a chess board
 pub const SQUARE_H8: Square = 63;
 
-
 /// FILE_NAMES maps a file to a file name
-const FILE_NAMES: [char; 8] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+pub const FILE_NAMES: [char; 8] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 /// constructs a Square from rank and file
 pub fn rank_file(rank: Rank, file: File) -> Square {
