@@ -18,7 +18,7 @@ impl BitboardTrait for Bitboard {
             if bits % 8 == 0 {
                 buff += "*"
             }
-            if bb & 1 == 1 {
+            if bb & (1 << 63) != 0 {
                 buff += "1"
             } else {
                 buff += "0"
@@ -26,7 +26,7 @@ impl BitboardTrait for Bitboard {
             if bits % 8 == 7 {
                 buff += "*\n"
             }
-            bb = bb >> 1;
+            bb = bb << 1;
             bits = bits + 1;
             if bits == 64 {
                 break;

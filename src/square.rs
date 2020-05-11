@@ -1,3 +1,5 @@
+use crate::bitboard::*;
+
 /// Rank type represents the rank of a square as an unsigned int
 pub type Rank = usize;
 /// Rank type represents the file of a square as an unsigned int
@@ -194,6 +196,8 @@ pub trait SquareTrait {
     fn file(self) -> File;
     /// returns the UCI representation of the square
     fn uci(self) -> String;
+    /// returns an otherwise empty bitboard with the bit for this square set
+    fn bitboard(self) -> Bitboard;
 }
 
 impl SquareTrait for Square {
@@ -210,5 +214,10 @@ impl SquareTrait for Square {
     /// returns the UCI representation of the square
     fn uci(self) -> String {
         format!("{}{}", FILE_NAMES[self.file()], self.rank() + 1)
+    }
+
+    /// returns an otherwise empty bitboard with the bit for this square set
+    fn bitboard(self) -> Bitboard {
+        1 << self
     }
 }

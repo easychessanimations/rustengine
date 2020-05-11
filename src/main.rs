@@ -24,5 +24,7 @@ fn main() {
         p.san_symbol(),
         p.uci_symbol(),
         p.san_letter()
-    )
+    );
+
+    println!("\n{}", sq.bitboard().pretty_print_string());
 }
