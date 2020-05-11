@@ -41,6 +41,7 @@ impl BitboardTrait for Bitboard {
     }
 
     /// pops a square from the bitboard and returns it
+    /// together with a bool indicating whether the pop was succesful
     fn pop(&mut self) -> (Square, bool) {
         if *self == 0 {
             return (0, false);
