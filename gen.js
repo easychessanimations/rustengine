@@ -24,7 +24,7 @@ const FIGURE_INFO = [
 	["no_figure", "."],
 	["pawn", "p"],
 	["knight", "n"],
-	["bishop", "p"],
+	["bishop", "b"],
 	["rook", "r"],
 	["queen", "q"],
 	["king", "k"],

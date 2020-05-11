@@ -40,13 +40,13 @@ pub const JAILER: Figure = 17;
 
 /// FIGURE_FEN_SYMBOLS maps a figure to its fen symbol
 pub const FIGURE_FEN_SYMBOLS: [&str; 18] = [
-    ".", "p", "n", "p", "r", "q", "k", "l", "ln", "lne", "le", "lse", "ls", "lsw", "lw", "lnw",
+    ".", "p", "n", "b", "r", "q", "k", "l", "ln", "lne", "le", "lse", "ls", "lsw", "lw", "lnw",
     "s", "j",
 ];
 
 /// FIGURE_SAN_LETTERS maps a figure to its san letter
 pub const FIGURE_SAN_LETTERS: [&str; 18] = [
-    ".", "P", "N", "P", "R", "Q", "K", "L", "L", "L", "L", "L", "L", "L", "L", "L", "S", "J",
+    ".", "P", "N", "B", "R", "Q", "K", "L", "L", "L", "L", "L", "L", "L", "L", "L", "S", "J",
 ];
 
 /// FigureTrait adds methods to Figure
@@ -75,7 +75,7 @@ pub type Piece = usize;
 
 /// PIECE_FEN_SYMBOLS maps a piece to its fen symbol
 pub const PIECE_FEN_SYMBOLS: [&str; 36] = [
-    ".", ".", "p", "P", "n", "N", "p", "P", "r", "R", "q", "Q", "k", "K", "l", "L", "ln", "Ln",
+    ".", ".", "p", "P", "n", "N", "b", "B", "r", "R", "q", "Q", "k", "K", "l", "L", "ln", "Ln",
     "lne", "Lne", "le", "Le", "lse", "Lse", "ls", "Ls", "lsw", "Lsw", "lw", "Lw", "lnw", "Lnw",
     "s", "S", "j", "J",
 ];
