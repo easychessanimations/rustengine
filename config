@@ -1,0 +1,23 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "github"]
+	url = https://easychessanimations@github.com/easychessanimations/rustengine.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "gitlab"]
+	url = https://easychessanimations@gitlab.com/easychessanimations/rustengine.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = github
+	merge = refs/heads/master
+[user]
+	name = easychessanimations
+	email = chessbotroulette@gmail.com
+	[credential "https://easychessanimations@github.com/easychessanimations/rustengine.git"]
+		username = easychessanimations
+	[credential "https://easychessanimations@gitlab.com/easychessanimations/rustengine.git"]
+		username = easychessanimations

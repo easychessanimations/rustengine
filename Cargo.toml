@@ -1,0 +1,9 @@
+[package]
+name = "rustengine"
+version = "1.0.0"
+authors = ["easychessanimations <chessbotroulette@gmail.com>"]
+description = "Rust bitboard multi variant uci chess analysis engine."
+keywords = ["bitboard", "variant", "chess", "uci", "engine"]
+edition = "2018"
+
+[dependencies]
