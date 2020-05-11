@@ -1,3 +1,5 @@
+use crate::square::*;
+
 /// Bitboard type represents the squares of a 8x8 chess board as bits of an unsigned 64 bit integer
 pub type Bitboard = u64;
 
@@ -5,6 +7,9 @@ pub type Bitboard = u64;
 pub trait BitboardTrait {
     /// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String;
+    /// pops a square from the bitboard and returns it
+    /// together with a bool indicating whether the pop was succesful
+    fn pop(&mut self) -> (Square, bool);
 }
 
 /// BitboardTrait adds methods to Bitboard
@@ -33,5 +38,20 @@ impl BitboardTrait for Bitboard {
             }
         }
         format! {"bitboard {:#016x}\n**********\n{}**********\n", &self, buff}
+    }
+
+    /// pops a square from the bitboard and returns it
+    fn pop(&mut self) -> (Square, bool) {
+        if *self == 0 {
+            return (0, false);
+        }
+
+        let tzs = self.trailing_zeros() as usize;
+
+        let sq = rank_file(tzs / NUM_FILES, LAST_FILE - (tzs % NUM_FILES));
+
+        *self &= !(1 << tzs);
+
+        return (sq, true);
     }
 }

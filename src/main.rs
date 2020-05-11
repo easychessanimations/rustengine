@@ -26,5 +26,23 @@ fn main() {
         p.san_letter()
     );
 
-    println!("\n{}", sq.bitboard().pretty_print_string());
+    let mut bb: Bitboard = sq.bitboard() | SQUARE_G6.bitboard();
+
+    println!("\n{}", bb.pretty_print_string());
+
+    let (sq, ok) = bb.pop();
+
+    println!("\n{} {}", sq.uci(), ok);
+
+    println!("\n{}", bb.pretty_print_string());
+
+    let (sq, ok) = bb.pop();
+
+    println!("\n{} {}", sq.uci(), ok);
+
+    println!("\n{}", bb.pretty_print_string());
+
+    let (sq, ok) = bb.pop();
+
+    println!("\n{} {}", sq.uci(), ok);
 }

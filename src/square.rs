@@ -9,8 +9,12 @@ pub type Square = usize;
 
 /// NUM_RANKS tells the number of ranks of a chess board
 pub const NUM_RANKS: usize = 8;
+/// LAST_RANK tells the last rank of a chess board
+pub const LAST_RANK: Rank = NUM_RANKS - 1;
 /// NUM_RANKS tells the number of files of a chess board
 pub const NUM_FILES: usize = 8;
+/// LAST_FILE tells the last file of a chess board
+pub const LAST_FILE: File = NUM_FILES - 1;
 
 /// RANK_SHIFT tells the position of the rank in bits within a square
 pub const RANK_SHIFT: usize = 3;
@@ -218,6 +222,6 @@ impl SquareTrait for Square {
 
     /// returns an otherwise empty bitboard with the bit for this square set
     fn bitboard(self) -> Bitboard {
-        1 << self
+        1 << (LAST_FILE - self.file()) + self.rank() * NUM_FILES
     }
 }
