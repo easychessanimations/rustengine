@@ -1,10 +1,14 @@
+/// Bitboard type represents the squares of a 8x8 chess board as bits of an unsigned 64 bit integer
+pub type Bitboard = u64;
+
 /// Bitboard trait adds functions to an u64 that allow treating it as a chess engine bitboard
-pub trait Bitboard {
+pub trait BitboardTrait {
     /// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String;
 }
 
-impl Bitboard for u64 {
+/// BitboardTrait adds methods to Bitboard
+impl BitboardTrait for Bitboard {
     /// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String {
         let mut bb = *self;
