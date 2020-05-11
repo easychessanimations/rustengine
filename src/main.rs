@@ -26,23 +26,18 @@ fn main() {
         p.san_letter()
     );
 
-    let mut bb: Bitboard = sq.bitboard() | SQUARE_G6.bitboard();
+    let mut bb: Bitboard = sq.bitboard() | SQUARE_G6.bitboard() | 0xf00;
 
-    println!("\n{}", bb.pretty_print_string());
+    loop {
+        println!("\n{}", bb.pretty_print_string());
 
-    let (sq, ok) = bb.pop();
+        let (sq, ok) = bb.pop();
 
-    println!("\n{} {}", sq.uci(), ok);
-
-    println!("\n{}", bb.pretty_print_string());
-
-    let (sq, ok) = bb.pop();
-
-    println!("\n{} {}", sq.uci(), ok);
-
-    println!("\n{}", bb.pretty_print_string());
-
-    let (sq, ok) = bb.pop();
-
-    println!("\n{} {}", sq.uci(), ok);
+        if ok {
+            println!("\n{}", sq.uci());
+        } else {
+            println!("no square could be popped");
+            break;
+        }
+    }
 }
