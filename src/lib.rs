@@ -1,3 +1,5 @@
+pub mod bitboard;
+
 #[cfg(test)]
 mod tests {
     #[test]
