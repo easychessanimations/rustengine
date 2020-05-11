@@ -68,6 +68,7 @@ pub const WHITE: Color = 1;
 /// Piece type represents a chess piece as an unsigned int
 pub type Piece = usize;
 
+/// PIECE_FEN_SYMBOLS maps a piece to its fen symbol
 pub const PIECE_FEN_SYMBOLS: [&str; 36] = [
     ".", ".", "p", "P", "n", "N", "p", "P", "r", "R", "q", "Q", "k", "K", "l", "L", "ln", "Ln",
     "lne", "Lne", "le", "Le", "lse", "Lse", "ls", "Ls", "lsw", "Lsw", "lw", "Lw", "lnw", "Lnw",
