@@ -75,6 +75,7 @@ pub const PIECE_FEN_SYMBOLS: [&str; 36] = [
     "s", "S", "j", "J",
 ];
 
+/// returns a piece from color and figure
 pub fn color_figure(col: Color, fig: Figure) -> Piece {
     (2 * fig) + col
 }
