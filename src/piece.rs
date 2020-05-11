@@ -47,12 +47,70 @@ pub const FIGURE_FEN_SYMBOLS: [&str; 18] = [
 /// FigureTrait adds methods to Figure
 pub trait FigureTrait {
     /// returns the fen symbol for the figure ( lower case )
-    fn fen_symbol(self) -> &'static str;
+    fn symbol(self) -> &'static str;
 }
 
 impl FigureTrait for Figure {
     /// returns the fen symbol for the figure ( lower case )
-    fn fen_symbol(self) -> &'static str {
+    fn symbol(self) -> &'static str {
         FIGURE_FEN_SYMBOLS[self]
+    }
+}
+
+/// Color type represents a chess color
+pub type Color = usize;
+
+/// BLACK represents black chess color
+pub const BLACK: Color = 0;
+/// WHITE represents white chess color
+pub const WHITE: Color = 1;
+
+/// Piece type represents a chess piece as an unsigned int
+pub type Piece = usize;
+
+pub const PIECE_FEN_SYMBOLS: [&str; 36] = [
+    ".", ".", "p", "P", "n", "N", "p", "P", "r", "R", "q", "Q", "k", "K", "l", "L", "ln", "Ln",
+    "lne", "Lne", "le", "Le", "lse", "Lse", "ls", "Ls", "lsw", "Lsw", "lw", "Lw", "lnw", "Lnw",
+    "s", "S", "j", "J",
+];
+
+pub fn color_figure(col: Color, fig: Figure) -> Piece {
+    (2 * fig) + col
+}
+
+/// PieceTrait adds methods to Piece
+pub trait PieceTrait {
+    /// returns the color of the piece
+    fn color(self) -> Color;
+    /// returns the figure of the piece
+    fn figure(self) -> Figure;
+    /// returns the fen symbol for the piece
+    fn fen_symbol(self) -> &'static str;
+    /// returns the san symbol for the piece ( capital piece letter )
+    fn san_symbol(self) -> &'static str;
+    /// returns the uci symbol of the piece ( lower case )
+    fn uci_symbol(self) -> &'static str;
+}
+
+impl PieceTrait for Piece {
+    /// returns the color of the piece
+    fn color(self) -> Color {
+        return if self & 1 == 0 { BLACK } else { WHITE };
+    }
+    /// returns the figure of the piece
+    fn figure(self) -> Figure {
+        self >> 1
+    }
+    /// returns the fen symbol for the piece
+    fn fen_symbol(self) -> &'static str {
+        PIECE_FEN_SYMBOLS[self]
+    }
+    /// returns the san symbol for the piece ( capital piece letter )
+    fn san_symbol(self) -> &'static str {
+        return color_figure(WHITE, self.figure()).fen_symbol();
+    }
+    /// returns the uci symbol of the piece ( lower case )
+    fn uci_symbol(self) -> &'static str {
+        return self.figure().symbol();
     }
 }

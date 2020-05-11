@@ -13,5 +13,15 @@ fn main() {
 
     let fig: Figure = LANCERNE;
 
-    println!("\nfigure {} fen symbol {}", fig, fig.fen_symbol())
+    println!("\nfigure {} symbol {}", fig, fig.symbol());
+
+    let p: Piece = color_figure(WHITE, LANCERNE);
+
+    println!(
+        "\npiece {} fen symbol {} san symbol {} uci_symbol {}",
+        p,
+        p.fen_symbol(),
+        p.san_symbol(),
+        p.uci_symbol()
+    )
 }
