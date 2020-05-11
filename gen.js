@@ -52,6 +52,7 @@ let figBuff = FIGURE_INFO.map((fi, i) => `/// ${fi[0].toUpperCase()} represents 
 
 fs.writeFileSync("gen.txt", `
 pub const FIGURE_FEN_SYMBOLS : [&str; ${FIGURE_INFO.length}] = [${FIGURE_INFO.map(fi => '"' + fi[1] + '"')}];
+pub const FIGURE_SAN_LETTERS : [&str; ${FIGURE_INFO.length}] = [${FIGURE_INFO.map(fi => '"' + fi[1].substring(0,1).toUpperCase() + '"')}];
 pub const PIECE_FEN_SYMBOLS : [&str; ${PIECE_INFO.length}] = [${PIECE_INFO.map(fi => '"' + fi[1] + '"')}];
 
 ${figBuff.join("\n")}

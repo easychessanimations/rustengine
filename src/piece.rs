@@ -44,6 +44,11 @@ pub const FIGURE_FEN_SYMBOLS: [&str; 18] = [
     "s", "j",
 ];
 
+/// FIGURE_SAN_LETTERS maps a figure to its san letter
+pub const FIGURE_SAN_LETTERS: [&str; 18] = [
+    ".", "P", "N", "P", "R", "Q", "K", "L", "L", "L", "L", "L", "L", "L", "L", "L", "S", "J",
+];
+
 /// FigureTrait adds methods to Figure
 pub trait FigureTrait {
     /// returns the fen symbol for the figure ( lower case )
@@ -92,6 +97,8 @@ pub trait PieceTrait {
     fn san_symbol(self) -> &'static str;
     /// returns the uci symbol of the piece ( lower case )
     fn uci_symbol(self) -> &'static str;
+    /// returns the san letter of the piece ( upper case )
+    fn san_letter(self) -> &'static str;
 }
 
 impl PieceTrait for Piece {
@@ -114,5 +121,9 @@ impl PieceTrait for Piece {
     /// returns the uci symbol of the piece ( lower case )
     fn uci_symbol(self) -> &'static str {
         return self.figure().symbol();
+    }
+    /// returns the san letter of the piece ( upper case )
+    fn san_letter(self) -> &'static str {
+        FIGURE_SAN_LETTERS[self.figure()]
     }
 }

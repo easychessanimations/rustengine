@@ -18,10 +18,11 @@ fn main() {
     let p: Piece = color_figure(WHITE, LANCERNE);
 
     println!(
-        "\npiece {} fen symbol {} san symbol {} uci_symbol {}",
+        "\npiece {} fen symbol {} san symbol {} uci_symbol {} san letter {}",
         p,
         p.fen_symbol(),
         p.san_symbol(),
-        p.uci_symbol()
+        p.uci_symbol(),
+        p.san_letter()
     )
 }

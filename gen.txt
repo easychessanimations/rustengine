@@ -1,5 +1,6 @@
 
 pub const FIGURE_FEN_SYMBOLS : [&str; 18] = [".","p","n","p","r","q","k","l","ln","lne","le","lse","ls","lsw","lw","lnw","s","j"];
+pub const FIGURE_SAN_LETTERS : [&str; 18] = [".","P","N","P","R","Q","K","L","L","L","L","L","L","L","L","L","S","J"];
 pub const PIECE_FEN_SYMBOLS : [&str; 36] = [".",".","p","P","n","N","p","P","r","R","q","Q","k","K","l","L","ln","Ln","lne","Lne","le","Le","lse","Lse","ls","Ls","lsw","Lsw","lw","Lw","lnw","Lnw","s","S","j","J"];
 
 /// NO_FIGURE represents chess figure 'no_figure'
