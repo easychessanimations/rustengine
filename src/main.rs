@@ -53,17 +53,15 @@ fn demo() {
 }
 
 fn main() {
-    init_attack_tables();
-
     println!("\n\nhi rustengine");
 
     if false {
         demo()
     }
 
-    unsafe {
-        println!("{}", QUEEN_ATTACK[SQUARE_B2].pretty_print_string());
-    }
+    println!("{}", QUEEN_ATTACK[SQUARE_E4].pretty_print_string());
+
+    println!("{}", KING_AREA[SQUARE_G8].pretty_print_string());
 
     println!("\n\nbye rustengine");
 }

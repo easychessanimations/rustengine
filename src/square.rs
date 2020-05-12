@@ -493,35 +493,53 @@ pub const EMPTY_ATTACK_TABLE: AttackTable = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
-/// KNIGHT_ATTACK is the attack table of knight
-pub static mut KNIGHT_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
-/// BISHOP_ATTACK is the attack table of bishop
-pub static mut BISHOP_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
-/// ROOK_ATTACK is the attack table of rook
-pub static mut ROOK_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
-/// QUEEN_ATTACK is the attack table of queen
-pub static mut QUEEN_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
-/// KING_ATTACK is the attack table of king
-pub static mut KING_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
-/// KING_AREA is the attack table of king plus king square
-pub static mut KING_AREA: AttackTable = EMPTY_ATTACK_TABLE;
-
-/// initializes attack tables, must be called before using the module
-pub fn init_attack_tables() {
-    let mut sq: Square = 0;
-    loop {
-        if sq < BOARD_AREA {
-            unsafe {
-                KNIGHT_ATTACK[sq] = jump_attack(sq, &KNIGHT_DELTAS, 0);
-                BISHOP_ATTACK[sq] = sliding_attack(sq, &BISHOP_DELTAS, 0);
-                ROOK_ATTACK[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
-                QUEEN_ATTACK[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
-                KING_ATTACK[sq] = jump_attack(sq, &QUEEN_DELTAS, 0);
-                KING_AREA[sq] = KING_ATTACK[sq] | sq.bitboard();
-            }
-            sq += 1;
-        } else {
-            break;
+lazy_static! {
+    /// KNIGHT_ATTACK is the attack table of knight
+    pub static ref KNIGHT_ATTACK: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = jump_attack(sq, &KNIGHT_DELTAS, 0);
         }
-    }
+        at
+    };
+    /// BISHOP_ATTACK is the attack table of bishop
+    pub static ref BISHOP_ATTACK: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = sliding_attack(sq, &BISHOP_DELTAS, 0);
+        }
+        at
+    };
+    /// ROOK_ATTACK is the attack table of rook
+    pub static ref ROOK_ATTACK: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
+        }
+        at
+    };
+    /// QUEEN_ATTACK is the attack table of queen
+    pub static ref QUEEN_ATTACK: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
+        }
+        at
+    };
+    /// KING_ATTACK is the attack table of king
+    pub static ref KING_ATTACK: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0);
+        }
+        at
+    };
+    /// KING_AREA is the attack table of king plus king square
+    pub static ref KING_AREA: AttackTable = {
+        let mut at = EMPTY_ATTACK_TABLE;
+        for sq in 0..BOARD_AREA{
+            at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0) | sq.bitboard();
+        }
+        at
+    };
 }

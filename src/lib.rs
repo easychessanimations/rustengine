@@ -2,6 +2,9 @@ pub mod bitboard;
 pub mod piece;
 pub mod square;
 
+#[macro_use]
+extern crate lazy_static;
+
 #[cfg(test)]
 mod tests {
     #[test]

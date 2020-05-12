@@ -19,3 +19,4 @@ name = "rustengine"
 path = "src/main.rs"
 
 [dependencies]
+lazy_static = "1.4.0"
