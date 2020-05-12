@@ -40,14 +40,6 @@ fn demo() {
             break;
         }
     }
-}
-
-fn main() {
-    println!("\n\nhi rustengine");
-
-    if false {
-        demo()
-    }
 
     println!(
         "{}",
@@ -58,6 +50,20 @@ fn main() {
         "{}",
         sliding_attack_8(SQUARE_E4, QUEEN_DELTAS, SQUARE_G6.bitboard()).pretty_print_string()
     );
+}
+
+fn main() {
+    init_attack_tables();
+
+    println!("\n\nhi rustengine");
+
+    if false {
+        demo()
+    }
+
+    unsafe {
+        println!("{}", QUEEN_ATTACK[SQUARE_B2].pretty_print_string());
+    }
 
     println!("\n\nbye rustengine");
 }

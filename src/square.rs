@@ -23,6 +23,8 @@ pub const LAST_FILE: File = NUM_FILES - 1;
 pub const ONE_BEFORE_LAST_FILE: File = LAST_FILE - 1;
 /// TWO_BEFORE_LAST_FILE tells the file two before last file
 pub const TWO_BEFORE_LAST_FILE: File = LAST_FILE - 2;
+/// BOARD_AREA tells the size of the board in squares
+pub const BOARD_AREA: usize = NUM_RANKS * NUM_FILES;
 
 /// Delta enum lists the possible deltas of chess pieces
 pub enum Delta {
@@ -480,4 +482,46 @@ pub fn sliding_attack_8(sq: Square, deltas: [Delta; 8], occup: Bitboard) -> Bitb
         }
     }
     bb
+}
+
+/// AttackTable type records an attack bitboard for every square of a chess board
+pub type AttackTable = [Bitboard; BOARD_AREA];
+
+/// EMPTY_ATTACK_TABLE defines an empty attack table, useful for initializing attack tables
+pub const EMPTY_ATTACK_TABLE: AttackTable = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+
+/// KNIGHT_ATTACK is the attack table of knight
+pub static mut KNIGHT_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
+/// BISHOP_ATTACK is the attack table of bishop
+pub static mut BISHOP_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
+/// ROOK_ATTACK is the attack table of rook
+pub static mut ROOK_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
+/// QUEEN_ATTACK is the attack table of queen
+pub static mut QUEEN_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
+/// KING_ATTACK is the attack table of king
+pub static mut KING_ATTACK: AttackTable = EMPTY_ATTACK_TABLE;
+/// KING_AREA is the attack table of king plus king square
+pub static mut KING_AREA: AttackTable = EMPTY_ATTACK_TABLE;
+
+/// initializes attack tables, must be called before using the module
+pub fn init_attack_tables() {
+    let mut sq: Square = 0;
+    loop {
+        if sq < BOARD_AREA {
+            unsafe {
+                KNIGHT_ATTACK[sq] = jump_attack_8(sq, KNIGHT_DELTAS, 0);
+                BISHOP_ATTACK[sq] = sliding_attack_4(sq, BISHOP_DELTAS, 0);
+                ROOK_ATTACK[sq] = sliding_attack_4(sq, ROOK_DELTAS, 0);
+                QUEEN_ATTACK[sq] = sliding_attack_8(sq, QUEEN_DELTAS, 0);
+                KING_ATTACK[sq] = jump_attack_8(sq, QUEEN_DELTAS, 0);
+                KING_AREA[sq] = KING_ATTACK[sq] | sq.bitboard();
+            }
+            sq += 1;
+        } else {
+            break;
+        }
+    }
 }
