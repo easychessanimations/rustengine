@@ -51,12 +51,12 @@ fn main() {
 
     println!(
         "{}",
-        jump_attack_8(SQUARE_E4, KNIGHT_DELTAS).pretty_print_string()
+        jump_attack_8(SQUARE_E4, KNIGHT_DELTAS, SQUARE_F6.bitboard()).pretty_print_string()
     );
 
     println!(
         "{}",
-        sliding_attack_8(SQUARE_E4, QUEEN_DELTAS).pretty_print_string()
+        sliding_attack_8(SQUARE_E4, QUEEN_DELTAS, SQUARE_G6.bitboard()).pretty_print_string()
     );
 
     println!("\n\nbye rustengine");

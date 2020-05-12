@@ -263,6 +263,8 @@ pub trait SquareTrait {
     /// adds a delta to a square and returns the resulting square
     /// together with a bool indicating whether adding was a success
     fn add_delta(self, delta: &Delta) -> (Square, bool);
+    /// same as add_delta, but also fails if the resulting square is occupied
+    fn add_delta_occup(self, delta: &Delta, occup: Bitboard) -> (Square, bool);
 }
 
 impl SquareTrait for Square {
@@ -406,13 +408,25 @@ impl SquareTrait for Square {
             }
         }
     }
+
+    /// same as add_delta, but also fails if the resulting square is occupied
+    fn add_delta_occup(self, delta: &Delta, occup: Bitboard) -> (Square, bool) {
+        let (sq, ok) = self.add_delta(delta);
+        if !ok {
+            return (0, false);
+        }
+        if sq.bitboard() & occup != 0 {
+            return (0, false);
+        }
+        return (sq, true);
+    }
 }
 
 /// returns jump attack bitboard from 4 deltas
-pub fn jump_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
+pub fn jump_attack_4(sq: Square, deltas: [Delta; 4], occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
     for i in 0..4 {
-        let (test_sq, ok) = sq.add_delta(&deltas[i]);
+        let (test_sq, ok) = sq.add_delta_occup(&deltas[i], occup);
         if ok {
             bb |= test_sq.bitboard();
         }
@@ -421,12 +435,12 @@ pub fn jump_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
 }
 
 /// returns sliding attack bitboard from 4 deltas
-pub fn sliding_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
+pub fn sliding_attack_4(sq: Square, deltas: [Delta; 4], occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
     for i in 0..4 {
         let mut test_sq = sq;
         loop {
-            let (new_test_sq, ok) = test_sq.add_delta(&deltas[i]);
+            let (new_test_sq, ok) = test_sq.add_delta_occup(&deltas[i], occup);
             if ok {
                 test_sq = new_test_sq;
                 bb |= test_sq.bitboard();
@@ -439,10 +453,10 @@ pub fn sliding_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
 }
 
 /// returns jump attack bitboard from 8 deltas
-pub fn jump_attack_8(sq: Square, deltas: [Delta; 8]) -> Bitboard {
+pub fn jump_attack_8(sq: Square, deltas: [Delta; 8], occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
     for i in 0..8 {
-        let (test_sq, ok) = sq.add_delta(&deltas[i]);
+        let (test_sq, ok) = sq.add_delta_occup(&deltas[i], occup);
         if ok {
             bb |= test_sq.bitboard();
         }
@@ -451,12 +465,12 @@ pub fn jump_attack_8(sq: Square, deltas: [Delta; 8]) -> Bitboard {
 }
 
 /// returns sliding attack bitboard from 8 deltas
-pub fn sliding_attack_8(sq: Square, deltas: [Delta; 8]) -> Bitboard {
+pub fn sliding_attack_8(sq: Square, deltas: [Delta; 8], occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
     for i in 0..8 {
         let mut test_sq = sq;
         loop {
-            let (new_test_sq, ok) = test_sq.add_delta(&deltas[i]);
+            let (new_test_sq, ok) = test_sq.add_delta_occup(&deltas[i], occup);
             if ok {
                 test_sq = new_test_sq;
                 bb |= test_sq.bitboard();
