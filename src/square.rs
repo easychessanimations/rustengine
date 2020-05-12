@@ -46,6 +46,36 @@ pub enum Delta {
     NNW,
 }
 
+/// DeltaBuffer trait adds methods to various size buffers that hold deltas
+pub trait DeltaBuffer {
+    /// len tells the length of the delta buffer
+    fn len(&self) -> usize;
+    /// get gets a delta by index from the delta buffer
+    fn get(&self, i: usize) -> &Delta;
+}
+
+impl DeltaBuffer for [Delta; 4] {
+    /// len tells the length of the delta buffer
+    fn len(&self) -> usize {
+        4
+    }
+    /// get gets a delta by index from the delta buffer
+    fn get(&self, i: usize) -> &Delta {
+        return &self[i];
+    }
+}
+
+impl DeltaBuffer for [Delta; 8] {
+    /// len tells the length of the delta buffer
+    fn len(&self) -> usize {
+        8
+    }
+    /// get gets a delta by index from the delta buffer
+    fn get(&self, i: usize) -> &Delta {
+        return &self[i];
+    }
+}
+
 /// KNIGHT_DELTAS lists the possible deltas of a knight
 pub const KNIGHT_DELTAS: [Delta; 8] = [
     Delta::NNE,
@@ -425,10 +455,10 @@ impl SquareTrait for Square {
 }
 
 /// returns jump attack bitboard from 4 deltas
-pub fn jump_attack_4(sq: Square, deltas: [Delta; 4], occup: Bitboard) -> Bitboard {
+pub fn jump_attack<T: DeltaBuffer>(sq: Square, deltas: &T, occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
-    for i in 0..4 {
-        let (test_sq, ok) = sq.add_delta_occup(&deltas[i], occup);
+    for i in 0..deltas.len() {
+        let (test_sq, ok) = sq.add_delta_occup(deltas.get(i), occup);
         if ok {
             bb |= test_sq.bitboard();
         }
@@ -436,43 +466,13 @@ pub fn jump_attack_4(sq: Square, deltas: [Delta; 4], occup: Bitboard) -> Bitboar
     bb
 }
 
-/// returns sliding attack bitboard from 4 deltas
-pub fn sliding_attack_4(sq: Square, deltas: [Delta; 4], occup: Bitboard) -> Bitboard {
+/// returns sliding attack bitboard from deltas
+pub fn sliding_attack<T: DeltaBuffer>(sq: Square, deltas: &T, occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
-    for i in 0..4 {
+    for i in 0..deltas.len() {
         let mut test_sq = sq;
         loop {
-            let (new_test_sq, ok) = test_sq.add_delta_occup(&deltas[i], occup);
-            if ok {
-                test_sq = new_test_sq;
-                bb |= test_sq.bitboard();
-            } else {
-                break;
-            }
-        }
-    }
-    bb
-}
-
-/// returns jump attack bitboard from 8 deltas
-pub fn jump_attack_8(sq: Square, deltas: [Delta; 8], occup: Bitboard) -> Bitboard {
-    let mut bb: Bitboard = 0;
-    for i in 0..8 {
-        let (test_sq, ok) = sq.add_delta_occup(&deltas[i], occup);
-        if ok {
-            bb |= test_sq.bitboard();
-        }
-    }
-    bb
-}
-
-/// returns sliding attack bitboard from 8 deltas
-pub fn sliding_attack_8(sq: Square, deltas: [Delta; 8], occup: Bitboard) -> Bitboard {
-    let mut bb: Bitboard = 0;
-    for i in 0..8 {
-        let mut test_sq = sq;
-        loop {
-            let (new_test_sq, ok) = test_sq.add_delta_occup(&deltas[i], occup);
+            let (new_test_sq, ok) = test_sq.add_delta_occup(deltas.get(i), occup);
             if ok {
                 test_sq = new_test_sq;
                 bb |= test_sq.bitboard();
@@ -512,11 +512,11 @@ pub fn init_attack_tables() {
     loop {
         if sq < BOARD_AREA {
             unsafe {
-                KNIGHT_ATTACK[sq] = jump_attack_8(sq, KNIGHT_DELTAS, 0);
-                BISHOP_ATTACK[sq] = sliding_attack_4(sq, BISHOP_DELTAS, 0);
-                ROOK_ATTACK[sq] = sliding_attack_4(sq, ROOK_DELTAS, 0);
-                QUEEN_ATTACK[sq] = sliding_attack_8(sq, QUEEN_DELTAS, 0);
-                KING_ATTACK[sq] = jump_attack_8(sq, QUEEN_DELTAS, 0);
+                KNIGHT_ATTACK[sq] = jump_attack(sq, &KNIGHT_DELTAS, 0);
+                BISHOP_ATTACK[sq] = sliding_attack(sq, &BISHOP_DELTAS, 0);
+                ROOK_ATTACK[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
+                QUEEN_ATTACK[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
+                KING_ATTACK[sq] = jump_attack(sq, &QUEEN_DELTAS, 0);
                 KING_AREA[sq] = KING_ATTACK[sq] | sq.bitboard();
             }
             sq += 1;
