@@ -2,7 +2,7 @@ use rustenginelib::bitboard::*;
 use rustenginelib::piece::*;
 use rustenginelib::square::*;
 
-fn main() {
+fn demo() {
     let x: Bitboard = 0xffff00000000ffff;
 
     println!("{}", x.pretty_print_string());
@@ -40,4 +40,24 @@ fn main() {
             break;
         }
     }
+}
+
+fn main() {
+    println!("\n\nhi rustengine");
+
+    if false {
+        demo()
+    }
+
+    println!(
+        "{}",
+        jump_attack_8(SQUARE_E4, KNIGHT_DELTAS).pretty_print_string()
+    );
+
+    println!(
+        "{}",
+        sliding_attack_8(SQUARE_E4, QUEEN_DELTAS).pretty_print_string()
+    );
+
+    println!("\n\nbye rustengine");
 }

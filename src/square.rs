@@ -11,10 +11,68 @@ pub type Square = usize;
 pub const NUM_RANKS: usize = 8;
 /// LAST_RANK tells the last rank of a chess board
 pub const LAST_RANK: Rank = NUM_RANKS - 1;
+/// ONE_BEFORE_LAST_RANK tells the rank before last rank
+pub const ONE_BEFORE_LAST_RANK: Rank = LAST_RANK - 1;
+/// TWO_BEFORE_LAST_RANK tells the rank two before last rank
+pub const TWO_BEFORE_LAST_RANK: Rank = LAST_RANK - 2;
 /// NUM_RANKS tells the number of files of a chess board
 pub const NUM_FILES: usize = 8;
 /// LAST_FILE tells the last file of a chess board
 pub const LAST_FILE: File = NUM_FILES - 1;
+/// ONE_BEFORE_LAST_FILE tells the file before last file
+pub const ONE_BEFORE_LAST_FILE: File = LAST_FILE - 1;
+/// TWO_BEFORE_LAST_FILE tells the file two before last file
+pub const TWO_BEFORE_LAST_FILE: File = LAST_FILE - 2;
+
+/// Delta enum lists the possible deltas of chess pieces
+pub enum Delta {
+    N,
+    NE,
+    NNE,
+    NEE,
+    E,
+    SE,
+    SEE,
+    SSE,
+    S,
+    SW,
+    SSW,
+    SWW,
+    W,
+    NW,
+    NWW,
+    NNW,
+}
+
+/// KNIGHT_DELTAS lists the possible deltas of a knight
+pub const KNIGHT_DELTAS: [Delta; 8] = [
+    Delta::NNE,
+    Delta::NEE,
+    Delta::SEE,
+    Delta::SSE,
+    Delta::SSW,
+    Delta::SWW,
+    Delta::NWW,
+    Delta::NNW,
+];
+
+/// BISHOP_DELTAS lists the possible deltas of a bishop
+pub const BISHOP_DELTAS: [Delta; 4] = [Delta::NE, Delta::SE, Delta::SW, Delta::NW];
+
+/// ROOK_DELTAS lists the possible deltas of a rook
+pub const ROOK_DELTAS: [Delta; 4] = [Delta::N, Delta::E, Delta::S, Delta::W];
+
+/// QUEEN_DELTAS lists the possible deltas of a queen
+pub const QUEEN_DELTAS: [Delta; 8] = [
+    Delta::N,
+    Delta::NE,
+    Delta::E,
+    Delta::SE,
+    Delta::S,
+    Delta::SW,
+    Delta::W,
+    Delta::NW,
+];
 
 /// RANK_SHIFT tells the position of the rank in bits within a square
 pub const RANK_SHIFT: usize = 3;
@@ -202,6 +260,9 @@ pub trait SquareTrait {
     fn uci(self) -> String;
     /// returns an otherwise empty bitboard with the bit for this square set
     fn bitboard(self) -> Bitboard;
+    /// adds a delta to a square and returns the resulting square
+    /// together with a bool indicating whether adding was a success
+    fn add_delta(self, delta: &Delta) -> (Square, bool);
 }
 
 impl SquareTrait for Square {
@@ -224,4 +285,185 @@ impl SquareTrait for Square {
     fn bitboard(self) -> Bitboard {
         1 << (LAST_FILE - self.file()) + self.rank() * NUM_FILES
     }
+
+    /// adds a delta to a square and returns the resulting square
+    /// together with a bool indicating whether adding was a success
+    fn add_delta(self, delta: &Delta) -> (Square, bool) {
+        let file = self.file();
+        let rank = self.rank();
+        match delta {
+            Delta::N => {
+                return if rank > ONE_BEFORE_LAST_RANK {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 1, file), true)
+                }
+            }
+            Delta::NE => {
+                return if rank > ONE_BEFORE_LAST_RANK || file > ONE_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 1, file + 1), true)
+                }
+            }
+            Delta::NNE => {
+                return if rank > TWO_BEFORE_LAST_RANK || file > ONE_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 2, file + 1), true)
+                }
+            }
+            Delta::NEE => {
+                return if rank > ONE_BEFORE_LAST_RANK || file > TWO_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 1, file + 2), true)
+                }
+            }
+            Delta::E => {
+                return if file > ONE_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank, file + 1), true)
+                }
+            }
+            Delta::SE => {
+                return if rank < 1 || file > ONE_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 1, file + 1), true)
+                }
+            }
+            Delta::SEE => {
+                return if rank < 1 || file > TWO_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 1, file + 2), true)
+                }
+            }
+            Delta::SSE => {
+                return if rank < 2 || file > ONE_BEFORE_LAST_FILE {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 2, file + 1), true)
+                }
+            }
+            Delta::S => {
+                return if rank < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 1, file), true)
+                }
+            }
+            Delta::SW => {
+                return if rank < 1 || file < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 1, file - 1), true)
+                }
+            }
+            Delta::SSW => {
+                return if rank < 2 || file < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 2, file - 1), true)
+                }
+            }
+            Delta::SWW => {
+                return if rank < 1 || file < 2 {
+                    (0, false)
+                } else {
+                    (rank_file(rank - 1, file - 2), true)
+                }
+            }
+            Delta::W => {
+                return if file < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank, file - 1), true)
+                }
+            }
+            Delta::NW => {
+                return if rank > ONE_BEFORE_LAST_RANK || file < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 1, file - 1), true)
+                }
+            }
+            Delta::NWW => {
+                return if rank > ONE_BEFORE_LAST_RANK || file < 2 {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 1, file - 2), true)
+                }
+            }
+            Delta::NNW => {
+                return if rank > TWO_BEFORE_LAST_RANK || file < 1 {
+                    (0, false)
+                } else {
+                    (rank_file(rank + 2, file - 1), true)
+                }
+            }
+        }
+    }
+}
+
+/// returns jump attack bitboard from 4 deltas
+pub fn jump_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
+    let mut bb: Bitboard = 0;
+    for i in 0..4 {
+        let (test_sq, ok) = sq.add_delta(&deltas[i]);
+        if ok {
+            bb |= test_sq.bitboard();
+        }
+    }
+    bb
+}
+
+/// returns sliding attack bitboard from 4 deltas
+pub fn sliding_attack_4(sq: Square, deltas: [Delta; 4]) -> Bitboard {
+    let mut bb: Bitboard = 0;
+    for i in 0..4 {
+        let mut test_sq = sq;
+        loop {
+            let (new_test_sq, ok) = test_sq.add_delta(&deltas[i]);
+            if ok {
+                test_sq = new_test_sq;
+                bb |= test_sq.bitboard();
+            } else {
+                break;
+            }
+        }
+    }
+    bb
+}
+
+/// returns jump attack bitboard from 8 deltas
+pub fn jump_attack_8(sq: Square, deltas: [Delta; 8]) -> Bitboard {
+    let mut bb: Bitboard = 0;
+    for i in 0..8 {
+        let (test_sq, ok) = sq.add_delta(&deltas[i]);
+        if ok {
+            bb |= test_sq.bitboard();
+        }
+    }
+    bb
+}
+
+/// returns sliding attack bitboard from 8 deltas
+pub fn sliding_attack_8(sq: Square, deltas: [Delta; 8]) -> Bitboard {
+    let mut bb: Bitboard = 0;
+    for i in 0..8 {
+        let mut test_sq = sq;
+        loop {
+            let (new_test_sq, ok) = test_sq.add_delta(&deltas[i]);
+            if ok {
+                test_sq = new_test_sq;
+                bb |= test_sq.bitboard();
+            } else {
+                break;
+            }
+        }
+    }
+    bb
 }

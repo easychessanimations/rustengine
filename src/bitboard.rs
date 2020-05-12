@@ -21,12 +21,12 @@ impl BitboardTrait for Bitboard {
         let mut bits = 0;
         loop {
             if bits % 8 == 0 {
-                buff += "*"
+                buff += &format!("{}", NUM_FILES - bits / 8).to_string();
             }
             if bb & (1 << 63) != 0 {
                 buff += "1"
             } else {
-                buff += "0"
+                buff += "."
             }
             if bits % 8 == 7 {
                 buff += "*\n"
@@ -37,7 +37,7 @@ impl BitboardTrait for Bitboard {
                 break;
             }
         }
-        format! {"bitboard {:#016x}\n**********\n{}**********\n", &self, buff}
+        format! {"bitboard {:#016x}\n**********\n{}*abcdefgh*\n", &self, buff}
     }
 
     /// pops a square from the bitboard and returns it
