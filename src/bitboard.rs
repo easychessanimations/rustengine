@@ -13,6 +13,8 @@ pub trait BitboardTrait {
     /// pops a square from the bitboard and returns it
     /// together with a bool indicating whether the pop was succesful
     fn pop_square(&mut self) -> (Square, bool);
+    /// returns the number of ways the 1 bits in the bitboard can be set to either 1 or 0
+    fn variation_count(self) -> usize;
 }
 
 /// BitboardTrait adds methods to Bitboard
@@ -72,5 +74,10 @@ impl BitboardTrait for Bitboard {
         } else {
             (0, false)
         }
+    }
+
+    /// returns the number of ways the 1 bits in the bitboard can be set to either 1 or 0
+    fn variation_count(self) -> usize {
+        1 << self.count_ones()
     }
 }

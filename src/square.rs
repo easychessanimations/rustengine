@@ -543,3 +543,21 @@ pub static KING_AREA: Lazy<AttackTable> = Lazy::new(|| {
     }
     at
 });
+
+/// translates an occupancy mask to partial occupancy of a mobility
+pub fn translate_mask_to_occupancy(mask: usize, mobility: Bitboard) -> Bitboard {
+    let mut occup: Bitboard = 0;
+    let mut mob = mobility;
+    let mut m = mask;
+    loop {
+        let (bb, ok) = mob.pop_bitboard();
+        if ok {
+            if m & 1 != 0 {
+                occup |= bb;
+            }
+            m >>= 1;
+        } else {
+            return occup;
+        }
+    }
+}

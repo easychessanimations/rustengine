@@ -56,10 +56,33 @@ fn demo() {
     println!("{}", KING_AREA[SQUARE_G8].pretty_print_string());
 }
 
+fn enum_occup_demo() {
+    let occup = BISHOP_ATTACK[SQUARE_C7];
+
+    let mut mask: usize = 0;
+
+    loop {
+        if mask < occup.variation_count() {
+            println!(
+                "{}\n{}",
+                mask,
+                translate_mask_to_occupancy(mask, occup).pretty_print_string()
+            );
+            mask += 1;
+        } else {
+            break;
+        }
+    }
+}
+
 fn main() {
     println!("\nhi rustengine\n");
 
-    demo();
+    if false {
+        demo();
+    }
+
+    enum_occup_demo();
 
     println!("\nbye rustengine\n");
 }
