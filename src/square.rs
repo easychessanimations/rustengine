@@ -517,11 +517,25 @@ pub static BISHOP_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     }
     at
 });
+pub static BISHOP_MAGIC_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = magic_attack(sq, sliding_attack(sq, &BISHOP_DELTAS, 0));
+    }
+    at
+});
 /// ROOK_ATTACK is the attack table of rook
 pub static ROOK_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     let mut at = EMPTY_ATTACK_TABLE;
     for sq in 0..BOARD_AREA {
         at[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
+    }
+    at
+});
+pub static ROOK_MAGIC_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = magic_attack(sq, sliding_attack(sq, &ROOK_DELTAS, 0));
     }
     at
 });
@@ -1373,4 +1387,88 @@ pub fn total_magic_space(magics: [MagicInfo; BOARD_AREA]) -> usize {
         total += 1 << mi.shift;
     }
     total
+}
+
+pub const BISHOP_MAGIC_UNITS: usize = 18976;
+pub const ROOK_MAGIC_UNITS: usize = 387072;
+
+pub fn create_magic_lookup_table<T: DeltaBuffer>(
+    mis: &[MagicInfo; BOARD_AREA],
+    at: &AttackTable,
+    deltas: &T,
+) -> Vec<Vec<Bitboard>> {
+    let mut table = vec![vec![0; 0]; BOARD_AREA];
+    for sq in 0..BOARD_AREA {
+        let mobility = at[sq];
+        let variations = mobility.variation_count();
+
+        let mut mask: usize = 0;
+
+        let sq = mis[sq].sq; // just to use redundant sq for something
+
+        let magic = mis[sq].magic;
+        let shift = mis[sq].shift;
+
+        table[sq] = vec![0; 1 << shift];
+
+        loop {
+            if mask < variations {
+                let occup = translate_mask_to_occupancy(mask, mobility);
+                let index = mobility_index(occup, magic, shift);
+
+                table[sq][index] = sliding_attack(sq, deltas, occup);
+
+                mask += 1;
+            } else {
+                break;
+            }
+        }
+    }
+    table
+}
+
+pub static MAGIC_LOOKUP_BISHOP: Lazy<Vec<Vec<Bitboard>>> =
+    Lazy::new(|| create_magic_lookup_table(&BISHOP_MAGICS, &BISHOP_MAGIC_ATTACK, &BISHOP_DELTAS));
+
+pub static MAGIC_LOOKUP_ROOK: Lazy<Vec<Vec<Bitboard>>> =
+    Lazy::new(|| create_magic_lookup_table(&ROOK_MAGICS, &ROOK_MAGIC_ATTACK, &ROOK_DELTAS));
+
+pub fn get_sliding_mobility(
+    sq: Square,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+    mis: &[MagicInfo; BOARD_AREA],
+    at: &AttackTable,
+    lookup_table: &Vec<Vec<Bitboard>>,
+) -> Bitboard {
+    let occup = occup_us | occup_them;
+    let magic_occup = occup & at[sq];
+    let magic = mis[sq].magic;
+    let shift = mis[sq].shift;
+    let index = mobility_index(magic_occup, magic, shift);
+    let mob = lookup_table[sq][index];
+
+    mob
+}
+
+pub fn bishop_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> Bitboard {
+    get_sliding_mobility(
+        sq,
+        occup_us,
+        occup_them,
+        &BISHOP_MAGICS,
+        &BISHOP_MAGIC_ATTACK,
+        &MAGIC_LOOKUP_BISHOP,
+    )
+}
+
+pub fn rook_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> Bitboard {
+    get_sliding_mobility(
+        sq,
+        occup_us,
+        occup_them,
+        &ROOK_MAGICS,
+        &ROOK_MAGIC_ATTACK,
+        &MAGIC_LOOKUP_ROOK,
+    )
 }
