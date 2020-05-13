@@ -3,6 +3,16 @@ use crate::square::*;
 /// Bitboard type represents the squares of a 8x8 chess board as bits of an unsigned 64 bit integer
 pub type Bitboard = u64;
 
+pub const BITBOARD_MIDDLE: Bitboard = 0x007E7E7E7E7E7E00;
+pub const BITBOARD_RANK_8: Bitboard = 0xff00000000000000;
+pub const BITBOARD_RANK_8_MIDDLE: Bitboard = 0x7E00000000000000;
+pub const BITBOARD_RANK_1: Bitboard = 0x00000000000000ff;
+pub const BITBOARD_RANK_1_MIDDLE: Bitboard = 0x000000000000007E;
+pub const BITBOARD_FILE_A: Bitboard = 0x8080808080808080;
+pub const BITBOARD_FILE_A_MIDDLE: Bitboard = 0x0080808080808000;
+pub const BITBOARD_FILE_H: Bitboard = 0x0101010101010101;
+pub const BITBOARD_FILE_H_MIDDLE: Bitboard = 0x0001010101010100;
+
 /// Bitboard trait adds functions to an u64 that allow treating it as a chess engine bitboard
 pub trait BitboardTrait {
     /// returns a string that represents the bitboard as pretty print string

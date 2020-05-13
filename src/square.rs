@@ -2,6 +2,10 @@ use crate::bitboard::*;
 
 use once_cell::sync::Lazy;
 
+extern crate rand;
+
+use rand::Rng;
+
 /// Rank type represents the rank of a square as an unsigned int
 pub type Rank = usize;
 /// Rank type represents the file of a square as an unsigned int
@@ -560,4 +564,97 @@ pub fn translate_mask_to_occupancy(mask: usize, mobility: Bitboard) -> Bitboard 
             return occup;
         }
     }
+}
+
+/// returns a random magic
+pub fn new_magic() -> u64 {
+    rand::thread_rng().gen::<u64>()
+}
+
+/// returns index of mobility in mobility table for a magic and shift
+pub fn mobility_index(mobility: Bitboard, magic: u64, shift: usize) -> usize {
+    let (result, _) = mobility.overflowing_mul(magic);
+    (result >> (64 - shift)) as usize
+}
+
+/// detects collision of a magic applied to a mobility, returns true if there is a collision, false otherwise
+pub fn detect_collision(magic: u64, shift: usize, mobility: Bitboard) -> bool {
+    let variations = mobility.variation_count();
+    let mut mapped = vec![(false, 0); 1 << shift];
+
+    let mut mask: usize = 0;
+
+    loop {
+        if mask < variations {
+            let occup = translate_mask_to_occupancy(mask, mobility);
+            let index = mobility_index(occup, magic, shift);
+            let (used, bb) = mapped[index];
+            if used {
+                if bb != occup {
+                    return true;
+                }
+            } else {
+                mapped[index] = (true, occup);
+            }
+            mask += 1;
+        } else {
+            return false;
+        }
+    }
+}
+
+/// tries to find magic for shift in certain number of tries for a mobility, returns a tuple of the found magic and a bool indicating success
+pub fn find_magic_for_shift(shift: usize, mobility: Bitboard, max_tries: usize) -> (u64, bool) {
+    for _ in 0..max_tries {
+        let magic = new_magic();
+        if !detect_collision(magic, shift, mobility) {
+            return (magic, true);
+        }
+    }
+    return (0, false);
+}
+
+/// tries to find magic and shift in certain number of tries per shift for a mobility, starting from a maximum shift, going to minimum shift, returns a tuple of the found magic and a bool indicating success
+pub fn find_magic_and_shift(
+    mobility: Bitboard,
+    max_shift: usize,
+    min_shift: usize,
+    max_tries: usize,
+) -> (u64, usize, bool) {
+    let mut last_good_shift: usize = 0;
+    let mut last_good_magic: u64 = 0;
+    let mut has_magic = false;
+    for i in 0..(max_shift - min_shift + 1) {
+        let shift = max_shift - i;
+        let (magic, ok) = find_magic_for_shift(shift, mobility, max_tries);
+        if ok {
+            last_good_shift = shift;
+            last_good_magic = magic;
+            has_magic = true;
+        }
+    }
+    if has_magic {
+        return (last_good_magic, last_good_shift, true);
+    }
+    return (0, 0, false);
+}
+
+/// return magic attack for an attack
+pub fn magic_attack(sq: Square, attack: Bitboard) -> Bitboard {
+    let mut mask = BITBOARD_MIDDLE;
+
+    if sq.rank() == 0 {
+        mask |= BITBOARD_RANK_1_MIDDLE;
+    }
+    if sq.rank() == LAST_RANK {
+        mask |= BITBOARD_RANK_8_MIDDLE;
+    }
+    if sq.file() == 0 {
+        mask |= BITBOARD_FILE_A_MIDDLE;
+    }
+    if sq.file() == LAST_FILE {
+        mask |= BITBOARD_FILE_H_MIDDLE;
+    }
+
+    attack & mask
 }
