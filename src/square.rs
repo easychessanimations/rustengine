@@ -480,10 +480,13 @@ pub fn sliding_attack<T: DeltaBuffer>(sq: Square, deltas: &T, occup: Bitboard) -
     for i in 0..deltas.len() {
         let mut test_sq = sq;
         loop {
-            let (new_test_sq, ok) = test_sq.add_delta_occup(deltas.get(i), occup);
+            let (new_test_sq, ok) = test_sq.add_delta(deltas.get(i));
             if ok {
                 test_sq = new_test_sq;
                 bb |= test_sq.bitboard();
+                if (test_sq.bitboard()) & occup != 0 {
+                    break;
+                }
             } else {
                 break;
             }
@@ -1433,7 +1436,15 @@ pub static MAGIC_LOOKUP_BISHOP: Lazy<Vec<Vec<Bitboard>>> =
 pub static MAGIC_LOOKUP_ROOK: Lazy<Vec<Vec<Bitboard>>> =
     Lazy::new(|| create_magic_lookup_table(&ROOK_MAGICS, &ROOK_MAGIC_ATTACK, &ROOK_DELTAS));
 
+#[derive(Copy, Clone)]
+pub enum MoveGenMode {
+    Violent,
+    Quiet,
+    All,
+}
+
 pub fn get_sliding_mobility(
+    gen_mode: MoveGenMode,
     sq: Square,
     occup_us: Bitboard,
     occup_them: Bitboard,
@@ -1441,18 +1452,25 @@ pub fn get_sliding_mobility(
     at: &AttackTable,
     lookup_table: &Vec<Vec<Bitboard>>,
 ) -> Bitboard {
-    let occup = occup_us | occup_them;
-    let magic_occup = occup & at[sq];
     let magic = mis[sq].magic;
     let shift = mis[sq].shift;
+    let magic_occup = (occup_us | occup_them) & at[sq];
     let index = mobility_index(magic_occup, magic, shift);
-    let mob = lookup_table[sq][index];
-
-    mob
+    match gen_mode {
+        MoveGenMode::All => lookup_table[sq][index] & !occup_us,
+        MoveGenMode::Violent => lookup_table[sq][index] & occup_them,
+        MoveGenMode::Quiet => lookup_table[sq][index] & !(occup_us | occup_them),
+    }
 }
 
-pub fn bishop_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> Bitboard {
+pub fn bishop_mobility(
+    gen_mode: MoveGenMode,
+    sq: Square,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
     get_sliding_mobility(
+        gen_mode,
         sq,
         occup_us,
         occup_them,
@@ -1462,8 +1480,14 @@ pub fn bishop_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> 
     )
 }
 
-pub fn rook_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> Bitboard {
+pub fn rook_mobility(
+    gen_mode: MoveGenMode,
+    sq: Square,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
     get_sliding_mobility(
+        gen_mode,
         sq,
         occup_us,
         occup_them,
@@ -1471,4 +1495,14 @@ pub fn rook_mobility(sq: Square, occup_us: Bitboard, occup_them: Bitboard) -> Bi
         &ROOK_MAGIC_ATTACK,
         &MAGIC_LOOKUP_ROOK,
     )
+}
+
+pub fn queen_mobility(
+    gen_mode: MoveGenMode,
+    sq: Square,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
+    bishop_mobility(gen_mode, sq, occup_us, occup_them)
+        | rook_mobility(gen_mode, sq, occup_us, occup_them)
 }

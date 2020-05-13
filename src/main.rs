@@ -100,8 +100,13 @@ fn magic_space() {
 fn mobility_demo() {
     println!(
         "{}",
-        bishop_mobility(SQUARE_E4, SQUARE_G6.bitboard(), SQUARE_D5.bitboard())
-            .pretty_print_string()
+        queen_mobility(
+            MoveGenMode::All,
+            SQUARE_E4,
+            SQUARE_G6.bitboard() | SQUARE_C4.bitboard(),
+            SQUARE_D5.bitboard() | SQUARE_E7.bitboard()
+        )
+        .pretty_print_string()
     )
 }
 
