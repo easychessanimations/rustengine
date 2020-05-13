@@ -1,5 +1,7 @@
 use crate::bitboard::*;
 
+use once_cell::sync::Lazy;
+
 /// Rank type represents the rank of a square as an unsigned int
 pub type Rank = usize;
 /// Rank type represents the file of a square as an unsigned int
@@ -493,53 +495,51 @@ pub const EMPTY_ATTACK_TABLE: AttackTable = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
-lazy_static! {
-    /// KNIGHT_ATTACK is the attack table of knight
-    pub static ref KNIGHT_ATTACK: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = jump_attack(sq, &KNIGHT_DELTAS, 0);
-        }
-        at
-    };
-    /// BISHOP_ATTACK is the attack table of bishop
-    pub static ref BISHOP_ATTACK: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = sliding_attack(sq, &BISHOP_DELTAS, 0);
-        }
-        at
-    };
-    /// ROOK_ATTACK is the attack table of rook
-    pub static ref ROOK_ATTACK: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
-        }
-        at
-    };
-    /// QUEEN_ATTACK is the attack table of queen
-    pub static ref QUEEN_ATTACK: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
-        }
-        at
-    };
-    /// KING_ATTACK is the attack table of king
-    pub static ref KING_ATTACK: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0);
-        }
-        at
-    };
-    /// KING_AREA is the attack table of king plus king square
-    pub static ref KING_AREA: AttackTable = {
-        let mut at = EMPTY_ATTACK_TABLE;
-        for sq in 0..BOARD_AREA{
-            at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0) | sq.bitboard();
-        }
-        at
-    };
-}
+/// KNIGHT_ATTACK is the attack table of knight
+pub static KNIGHT_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = jump_attack(sq, &KNIGHT_DELTAS, 0);
+    }
+    at
+});
+/// BISHOP_ATTACK is the attack table of bishop
+pub static BISHOP_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = sliding_attack(sq, &BISHOP_DELTAS, 0);
+    }
+    at
+});
+/// ROOK_ATTACK is the attack table of rook
+pub static ROOK_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = sliding_attack(sq, &ROOK_DELTAS, 0);
+    }
+    at
+});
+/// QUEEN_ATTACK is the attack table of queen
+pub static QUEEN_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
+    }
+    at
+});
+/// KING_ATTACK is the attack table of king
+pub static KING_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0);
+    }
+    at
+});
+/// KING_AREA is the attack table of king plus king square
+pub static KING_AREA: Lazy<AttackTable> = Lazy::new(|| {
+    let mut at = EMPTY_ATTACK_TABLE;
+    for sq in 0..BOARD_AREA {
+        at[sq] = jump_attack(sq, &QUEEN_DELTAS, 0) | sq.bitboard();
+    }
+    at
+});
