@@ -1365,3 +1365,12 @@ pub const ROOK_MAGICS: [MagicInfo; BOARD_AREA] = [
         shift: 13,
     },
 ];
+
+pub fn total_magic_space(magics: [MagicInfo; BOARD_AREA]) -> usize {
+    let mut total = 0;
+    for i in 0..BOARD_AREA {
+        let mi = &magics[i];
+        total += 1 << mi.shift;
+    }
+    total
+}

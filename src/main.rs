@@ -75,6 +75,21 @@ fn enum_occup_demo() {
     }
 }
 
+fn magic_space() {
+    let sb = total_magic_space(BISHOP_MAGICS) * std::mem::size_of::<Bitboard>();
+    println!("total bishop magic space {} bytes", sb);
+
+    let sr = total_magic_space(ROOK_MAGICS) * std::mem::size_of::<Bitboard>();
+
+    println!("total rook magic space {} bytes", sr);
+
+    println!(
+        "\ngrand total magic space {} bytes = {:0.2} MiBs",
+        sb + sr,
+        (sb + sr) as f32 / 1e6
+    );
+}
+
 fn main() {
     println!("\nhi rustengine\n");
 
@@ -88,6 +103,10 @@ fn main() {
 
     if false {
         find_and_log_magics();
+    }
+
+    if true {
+        magic_space();
     }
 
     println!("\nbye rustengine\n");
