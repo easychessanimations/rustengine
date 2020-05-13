@@ -7,9 +7,12 @@ pub type Bitboard = u64;
 pub trait BitboardTrait {
     /// returns a string that represents the bitboard as pretty print string
     fn pretty_print_string(&self) -> String;
+    /// pops a bitboard with only one bit set from the bitboard and returns it
+    /// together with a bool indicating whether the pop was succesful
+    fn pop_bitboard(&mut self) -> (Bitboard, bool);
     /// pops a square from the bitboard and returns it
     /// together with a bool indicating whether the pop was succesful
-    fn pop(&mut self) -> (Square, bool);
+    fn pop_square(&mut self) -> (Square, bool);
 }
 
 /// BitboardTrait adds methods to Bitboard
@@ -40,19 +43,34 @@ impl BitboardTrait for Bitboard {
         format! {"bitboard {:#016x}\n**********\n{}*abcdefgh*\n", &self, buff}
     }
 
-    /// pops a square from the bitboard and returns it
+    /// pops a bitboard with only one bit set from the bitboard and returns it
     /// together with a bool indicating whether the pop was succesful
-    fn pop(&mut self) -> (Square, bool) {
+    fn pop_bitboard(&mut self) -> (Bitboard, bool) {
         if *self == 0 {
             return (0, false);
         }
 
-        let tzs = self.trailing_zeros() as usize;
+        let bb = 1 << (self.trailing_zeros() as usize);
 
-        let sq = rank_file(tzs / NUM_FILES, LAST_FILE - (tzs % NUM_FILES));
+        *self &= !bb;
 
-        *self &= !(1 << tzs);
+        return (bb, true);
+    }
 
-        return (sq, true);
+    /// pops a square from the bitboard and returns it
+    /// together with a bool indicating whether the pop was succesful
+    fn pop_square(&mut self) -> (Square, bool) {
+        let (bb, ok) = self.pop_bitboard();
+
+        if ok {
+            let tzs = bb.trailing_zeros() as usize;
+
+            (
+                rank_file(tzs / NUM_FILES, LAST_FILE - (tzs % NUM_FILES)),
+                true,
+            )
+        } else {
+            (0, false)
+        }
     }
 }

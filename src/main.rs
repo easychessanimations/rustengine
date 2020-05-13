@@ -26,17 +26,17 @@ fn demo() {
         p.san_letter()
     );
 
-    let mut bb: Bitboard = sq.bitboard() | SQUARE_G6.bitboard() | 0xf00;
+    let mut bb: Bitboard = sq.bitboard() | SQUARE_G6.bitboard();
 
     loop {
         println!("\n{}", bb.pretty_print_string());
 
-        let (sq, ok) = bb.pop();
+        let (sq, ok) = bb.pop_square();
 
         if ok {
-            println!("\n{}", sq.uci());
+            println!("{}", sq.uci());
         } else {
-            println!("no square could be popped");
+            println!("no square could be popped\n");
             break;
         }
     }
@@ -50,18 +50,16 @@ fn demo() {
         "{}",
         sliding_attack(SQUARE_E4, &QUEEN_DELTAS, SQUARE_G6.bitboard()).pretty_print_string()
     );
+
+    println!("{}", BISHOP_ATTACK[SQUARE_C7].pretty_print_string());
+
+    println!("{}", KING_AREA[SQUARE_G8].pretty_print_string());
 }
 
 fn main() {
-    println!("\n\nhi rustengine");
+    println!("\nhi rustengine\n");
 
-    if false {
-        demo()
-    }
+    demo();
 
-    println!("{}", QUEEN_ATTACK[SQUARE_E4].pretty_print_string());
-
-    println!("{}", KING_AREA[SQUARE_G8].pretty_print_string());
-
-    println!("\n\nbye rustengine");
+    println!("\nbye rustengine\n");
 }
