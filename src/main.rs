@@ -86,7 +86,7 @@ fn main() {
         enum_occup_demo();
     }
 
-    if true {
+    if false {
         find_and_log_magics();
     }
 

@@ -50,7 +50,31 @@ for(let fi of FIGURE_INFO){
 
 let figBuff = FIGURE_INFO.map((fi, i) => `/// ${fi[0].toUpperCase()} represents chess figure '${fi[0]}'\npub const ${fi[0].toUpperCase()} : Figure = ${i};`)
 
+let magics = fs.readFileSync("magics.txt").toString()
+
+let magicBuffs = {
+	bishop:[],
+	rook:[],
+}
+
+for(let line of magics.split("\n")){
+	let m
+	if(m=line.match(/magic kind ([^ ]+) square ([^ ]+) magic ([^ ]+) shift ([^ ]+)/)){
+		let kind = m[1]
+		let square = m[2]
+		let magic = m[3]
+		let shift = m[4]
+		magicBuffs[kind].push(`MagicInfo{ sq: SQUARE_${square.toUpperCase()}, magic: 0x${magic}, shift: ${shift} },`)
+	}
+}
+
+let magicContent = ["bishop", "rook"].map(kind=>{
+	return magicBuffs[kind].join("\n")
+}).join("\n\n")
+
 fs.writeFileSync("gen.txt", `
+${magicContent}
+
 pub const FIGURE_FEN_SYMBOLS : [&str; ${FIGURE_INFO.length}] = [${FIGURE_INFO.map(fi => '"' + fi[1] + '"')}];
 pub const FIGURE_SAN_LETTERS : [&str; ${FIGURE_INFO.length}] = [${FIGURE_INFO.map(fi => '"' + fi[1].substring(0,1).toUpperCase() + '"')}];
 pub const PIECE_FEN_SYMBOLS : [&str; ${PIECE_INFO.length}] = [${PIECE_INFO.map(fi => '"' + fi[1] + '"')}];

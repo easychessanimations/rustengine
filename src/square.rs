@@ -713,3 +713,655 @@ pub fn find_and_log_magics() {
         log_find_magic_and_shift(&mut bw, sq, magic_attack(sq, BISHOP_ATTACK[sq]), "bishop");
     }
 }
+
+pub struct MagicInfo {
+    sq: Square,
+    magic: u64,
+    shift: usize,
+}
+
+pub const BISHOP_MAGICS: [MagicInfo; BOARD_AREA] = [
+    MagicInfo {
+        sq: SQUARE_A1,
+        magic: 0x0EEEE053F756C577,
+        shift: 7,
+    },
+    MagicInfo {
+        sq: SQUARE_B1,
+        magic: 0x20A1752D5294E8AA,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C1,
+        magic: 0xFFAE7DCBB67E2AD8,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_D1,
+        magic: 0x95E20936ACF52029,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_E1,
+        magic: 0x8659660ABA92446A,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_F1,
+        magic: 0xCB2205A8F212E3CD,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_G1,
+        magic: 0x63095C5766AEAC33,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H1,
+        magic: 0x6A0A2CDED7FD32B6,
+        shift: 7,
+    },
+    MagicInfo {
+        sq: SQUARE_A2,
+        magic: 0xF7AA6799A42C1974,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B2,
+        magic: 0x0EEBFAAE2308CDE6,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C2,
+        magic: 0x62F5D4C232917A29,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_D2,
+        magic: 0x6511DA45FB6E605B,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_E2,
+        magic: 0x1C1020709501F819,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_F2,
+        magic: 0x9713D67F067E5B55,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_G2,
+        magic: 0x4A9B28CAC8388396,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H2,
+        magic: 0x0D80340307A89DE3,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_A3,
+        magic: 0xDFE4E245340681A7,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B3,
+        magic: 0x086E282C294CE76A,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C3,
+        magic: 0x7940D0C20066331C,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_D3,
+        magic: 0xB268CBA3523295A2,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_E3,
+        magic: 0xFA6472E0AEE3A9CD,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_F3,
+        magic: 0x4AB90CCE21C05AC4,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_G3,
+        magic: 0x19BBE314DB87C5A2,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H3,
+        magic: 0x2D8420D15430341A,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_A4,
+        magic: 0x002064D946035D06,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B4,
+        magic: 0x8F7EFC3826FCBC9E,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C4,
+        magic: 0xA5EFF6F3B79E13AC,
+        shift: 9,
+    },
+    MagicInfo {
+        sq: SQUARE_D4,
+        magic: 0x979736BB1A2BBF3F,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E4,
+        magic: 0x47EF601CFFC5AA96,
+        shift: 11,
+    },
+    MagicInfo {
+        sq: SQUARE_F4,
+        magic: 0xCBB12ECFB3AB9886,
+        shift: 9,
+    },
+    MagicInfo {
+        sq: SQUARE_G4,
+        magic: 0x9F3DE5985071281C,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H4,
+        magic: 0xF7F070016C4BB3B1,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_A5,
+        magic: 0x5B257CF070A81662,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B5,
+        magic: 0xDDDDF92F252AC221,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C5,
+        magic: 0x03B272448E17640F,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_D5,
+        magic: 0x344929A251A4A2B4,
+        shift: 11,
+    },
+    MagicInfo {
+        sq: SQUARE_E5,
+        magic: 0xC59870B586EE336E,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F5,
+        magic: 0x0D10F3CD6C346800,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_G5,
+        magic: 0x6C4A636CFAEE0FC3,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H5,
+        magic: 0x1B7C2059AA3C501E,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_A6,
+        magic: 0xF44FA78502E05C46,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B6,
+        magic: 0xA605295DB4D8A494,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C6,
+        magic: 0x57293F7EEA9072FC,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_D6,
+        magic: 0x7A4B502FE080693E,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_E6,
+        magic: 0x840FE3E0F7C37EFD,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_F6,
+        magic: 0xC6553AE93DE5DEEB,
+        shift: 8,
+    },
+    MagicInfo {
+        sq: SQUARE_G6,
+        magic: 0x186E0A1720748471,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_H6,
+        magic: 0x344586BD3800F615,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_A7,
+        magic: 0xDA81874F48DE2873,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_B7,
+        magic: 0xE750DB951630E01C,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_C7,
+        magic: 0x8D7AC01104BE4239,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_D7,
+        magic: 0xD069455082F020EF,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_E7,
+        magic: 0x0B12D09BE0A80D3B,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_F7,
+        magic: 0xF66D45FADE4750BF,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_G7,
+        magic: 0xDEE2FEF5608BB86B,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H7,
+        magic: 0x3BC4110C30BC372E,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_A8,
+        magic: 0x030D2624DC9C2FAB,
+        shift: 7,
+    },
+    MagicInfo {
+        sq: SQUARE_B8,
+        magic: 0x3BA0C0EE6C2C0185,
+        shift: 5,
+    },
+    MagicInfo {
+        sq: SQUARE_C8,
+        magic: 0x0B7687D6A30FCDB0,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_D8,
+        magic: 0x1A17F24EB26AC5B9,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_E8,
+        magic: 0x70266A5B055D77F6,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_F8,
+        magic: 0x8498203F0163A952,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_G8,
+        magic: 0xC4E6130B3DBE1E26,
+        shift: 6,
+    },
+    MagicInfo {
+        sq: SQUARE_H8,
+        magic: 0x9CB76E818B87114C,
+        shift: 7,
+    },
+];
+
+pub const ROOK_MAGICS: [MagicInfo; BOARD_AREA] = [
+    MagicInfo {
+        sq: SQUARE_A1,
+        magic: 0xEB5BFB1511B7C572,
+        shift: 14,
+    },
+    MagicInfo {
+        sq: SQUARE_B1,
+        magic: 0xC8608D0688E7A11A,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_C1,
+        magic: 0x3CE72520084C5AD7,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_D1,
+        magic: 0xB1CD151D5279C4E2,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_E1,
+        magic: 0x145254517D0A38C5,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_F1,
+        magic: 0x890F78296C5C6B67,
+        shift: 14,
+    },
+    MagicInfo {
+        sq: SQUARE_G1,
+        magic: 0x535154D37FDA3758,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_H1,
+        magic: 0x6F10FA4A53DDDD67,
+        shift: 14,
+    },
+    MagicInfo {
+        sq: SQUARE_A2,
+        magic: 0xFCF4667B997AD49A,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B2,
+        magic: 0xB381EE06B8D760C9,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C2,
+        magic: 0xF49744D7EA7A7F45,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D2,
+        magic: 0x2FDDB993EF98801C,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E2,
+        magic: 0x52893ECADF61693E,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F2,
+        magic: 0x0CACE9126E294884,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G2,
+        magic: 0x780E224E32B8259B,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H2,
+        magic: 0x4ED7F0F359C79D1D,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_A3,
+        magic: 0x58FF574A6B17102C,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B3,
+        magic: 0xC18E42DF30B60108,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C3,
+        magic: 0x82615CC2DC1619E7,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D3,
+        magic: 0x0AA0CFFF3CAB034F,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E3,
+        magic: 0x3AA209B910A2A2C0,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F3,
+        magic: 0x7D6D42D864ED4744,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G3,
+        magic: 0x1F49AC2C1FDA6D5B,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H3,
+        magic: 0x3B6D1A3A4AF92D50,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_A4,
+        magic: 0xE7C3B1D0B8EDF3A8,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B4,
+        magic: 0xE01E4C628A791328,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C4,
+        magic: 0xD9918490A8516264,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D4,
+        magic: 0x4AFFDBD9881440CE,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_E4,
+        magic: 0x29D9E1F13D9B48A5,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F4,
+        magic: 0xD2647A2309B70AF5,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G4,
+        magic: 0xF9978681E00B17E0,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H4,
+        magic: 0xF1F3DDFDAF83D405,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_A5,
+        magic: 0x954BA31977E062BA,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B5,
+        magic: 0xD52B1274D43F1A9C,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C5,
+        magic: 0xBE43F8A40D902543,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D5,
+        magic: 0x8866A7F07B184CA5,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E5,
+        magic: 0xF219EF680D77619C,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F5,
+        magic: 0x9BB75C3B8476F746,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G5,
+        magic: 0xAD1EE18B5B780265,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H5,
+        magic: 0xB6B44224206E74E5,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_A6,
+        magic: 0x649CDC1F34AEA2F6,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B6,
+        magic: 0xFF83A9859BA534C4,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C6,
+        magic: 0x37CA319A4D50C97E,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D6,
+        magic: 0x858715E0CC1F8F7A,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E6,
+        magic: 0xE729AA5F024DF2C0,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F6,
+        magic: 0x1274960D5333E983,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G6,
+        magic: 0x4E78A790882C2806,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H6,
+        magic: 0x7C27B241F8825A5B,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_A7,
+        magic: 0x0DFC0F9386834FD8,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_B7,
+        magic: 0x87342325FE073668,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C7,
+        magic: 0x850AE96248D88210,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_D7,
+        magic: 0x8A8D8EA6E640F8F7,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_E7,
+        magic: 0xC6AC009AB7852C97,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_F7,
+        magic: 0x6D9B84E49D05E5D8,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_G7,
+        magic: 0xF598D5B0F5881D70,
+        shift: 11,
+    },
+    MagicInfo {
+        sq: SQUARE_H7,
+        magic: 0x1238BF08A6F9C38D,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_A8,
+        magic: 0xCFC8C410148D3AF6,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_B8,
+        magic: 0x234F1593282FADBC,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_C8,
+        magic: 0x6BCC4CA147847096,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_D8,
+        magic: 0xA7FF3C5F35FFF73A,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_E8,
+        magic: 0x6A4F4F1EC85934C6,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_F8,
+        magic: 0x7E23DAD717AC6081,
+        shift: 13,
+    },
+    MagicInfo {
+        sq: SQUARE_G8,
+        magic: 0x7211D918B0800852,
+        shift: 12,
+    },
+    MagicInfo {
+        sq: SQUARE_H8,
+        magic: 0x8588AC87AA8CA46A,
+        shift: 13,
+    },
+];
