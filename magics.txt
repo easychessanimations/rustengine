@@ -1,0 +1,2048 @@
+bitboard 0x8080808080807e
+**********
+8........*
+71.......*
+61.......*
+51.......*
+41.......*
+31.......*
+21.......*
+1.111111.*
+*abcdefgh*
+
+mobility for rook at square a1 , count 12
+
+magic kind rook square a1 magic 7BDA3B53F7E653A4 shift 15
+
+bitboard 0x02040810204000
+**********
+8........*
+7......1.*
+6.....1..*
+5....1...*
+4...1....*
+3..1.....*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a1 , count 6
+
+magic kind bishop square a1 magic EA9041885F1F50B6 shift 8
+
+bitboard 0x4040404040403e
+**********
+8........*
+7.1......*
+6.1......*
+5.1......*
+4.1......*
+3.1......*
+2.1......*
+1..11111.*
+*abcdefgh*
+
+mobility for rook at square b1 , count 11
+
+magic kind rook square b1 magic A396ADC9269619C1 shift 13
+
+bitboard 0x00020408102000
+**********
+8........*
+7........*
+6......1.*
+5.....1..*
+4....1...*
+3...1....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b1 , count 5
+
+magic kind bishop square b1 magic 67E542CFDE0895B2 shift 7
+
+bitboard 0x2020202020205e
+**********
+8........*
+7..1.....*
+6..1.....*
+5..1.....*
+4..1.....*
+3..1.....*
+2..1.....*
+1.1.1111.*
+*abcdefgh*
+
+mobility for rook at square c1 , count 11
+
+magic kind rook square c1 magic A4FDACA9A9F064EA shift 14
+
+bitboard 0x00000204085000
+**********
+8........*
+7........*
+6........*
+5......1.*
+4.....1..*
+3....1...*
+2.1.1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c1 , count 5
+
+magic kind bishop square c1 magic 1E592246AC646D7F shift 7
+
+bitboard 0x1010101010106e
+**********
+8........*
+7...1....*
+6...1....*
+5...1....*
+4...1....*
+3...1....*
+2...1....*
+1.11.111.*
+*abcdefgh*
+
+mobility for rook at square d1 , count 11
+
+magic kind rook square d1 magic 4224E523A36E140E shift 14
+
+bitboard 0x00000002442800
+**********
+8........*
+7........*
+6........*
+5........*
+4......1.*
+3.1...1..*
+2..1.1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d1 , count 5
+
+magic kind bishop square d1 magic C9C71EEF1D731F98 shift 7
+
+bitboard 0x08080808080876
+**********
+8........*
+7....1...*
+6....1...*
+5....1...*
+4....1...*
+3....1...*
+2....1...*
+1.111.11.*
+*abcdefgh*
+
+mobility for rook at square e1 , count 11
+
+magic kind rook square e1 magic 355D5F14506ED083 shift 15
+
+bitboard 0x00000040221400
+**********
+8........*
+7........*
+6........*
+5........*
+4.1......*
+3..1...1.*
+2...1.1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e1 , count 5
+
+magic kind bishop square e1 magic 60CBC98D567B335A shift 7
+
+bitboard 0x0404040404047a
+**********
+8........*
+7.....1..*
+6.....1..*
+5.....1..*
+4.....1..*
+3.....1..*
+2.....1..*
+1.1111.1.*
+*abcdefgh*
+
+mobility for rook at square f1 , count 11
+
+magic kind rook square f1 magic 4B720460DB8BE73B shift 14
+
+bitboard 0x00004020100a00
+**********
+8........*
+7........*
+6........*
+5.1......*
+4..1.....*
+3...1....*
+2....1.1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f1 , count 5
+
+magic kind bishop square f1 magic 9E92D07C1A25C811 shift 7
+
+bitboard 0x0202020202027c
+**********
+8........*
+7......1.*
+6......1.*
+5......1.*
+4......1.*
+3......1.*
+2......1.*
+1.11111..*
+*abcdefgh*
+
+mobility for rook at square g1 , count 11
+
+magic kind rook square g1 magic F4F9E3AC1D09FE75 shift 14
+
+bitboard 0x00402010080400
+**********
+8........*
+7........*
+6.1......*
+5..1.....*
+4...1....*
+3....1...*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g1 , count 5
+
+magic kind bishop square g1 magic DF0B92EB3E14A0AA shift 7
+
+bitboard 0x0101010101017e
+**********
+8........*
+7.......1*
+6.......1*
+5.......1*
+4.......1*
+3.......1*
+2.......1*
+1.111111.*
+*abcdefgh*
+
+mobility for rook at square h1 , count 12
+
+magic kind rook square h1 magic F791CDDAB02824A3 shift 15
+
+bitboard 0x40201008040200
+**********
+8........*
+7.1......*
+6..1.....*
+5...1....*
+4....1...*
+3.....1..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h1 , count 6
+
+magic kind bishop square h1 magic 2ACC3DF600A21D71 shift 8
+
+bitboard 0x80808080807e00
+**********
+8........*
+71.......*
+61.......*
+51.......*
+41.......*
+31.......*
+2.111111.*
+1........*
+*abcdefgh*
+
+mobility for rook at square a2 , count 11
+
+magic kind rook square a2 magic 18FB83E543BDEBA1 shift 14
+
+bitboard 0x04081020400000
+**********
+8........*
+7.....1..*
+6....1...*
+5...1....*
+4..1.....*
+3.1......*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a2 , count 5
+
+magic kind bishop square a2 magic B0B4D0E7AAAFA937 shift 7
+
+bitboard 0x40404040403e00
+**********
+8........*
+7.1......*
+6.1......*
+5.1......*
+4.1......*
+3.1......*
+2..11111.*
+1........*
+*abcdefgh*
+
+mobility for rook at square b2 , count 10
+
+magic kind rook square b2 magic 2BBCC807E859C302 shift 12
+
+bitboard 0x02040810200000
+**********
+8........*
+7......1.*
+6.....1..*
+5....1...*
+4...1....*
+3..1.....*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b2 , count 5
+
+magic kind bishop square b2 magic E279C65D4CD49F28 shift 7
+
+bitboard 0x20202020205e00
+**********
+8........*
+7..1.....*
+6..1.....*
+5..1.....*
+4..1.....*
+3..1.....*
+2.1.1111.*
+1........*
+*abcdefgh*
+
+mobility for rook at square c2 , count 10
+
+magic kind rook square c2 magic 60C9398AEAB9C4B9 shift 13
+
+bitboard 0x00020408500000
+**********
+8........*
+7........*
+6......1.*
+5.....1..*
+4....1...*
+3.1.1....*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c2 , count 5
+
+magic kind bishop square c2 magic CC2960E372EFADF1 shift 7
+
+bitboard 0x10101010106e00
+**********
+8........*
+7...1....*
+6...1....*
+5...1....*
+4...1....*
+3...1....*
+2.11.111.*
+1........*
+*abcdefgh*
+
+mobility for rook at square d2 , count 10
+
+magic kind rook square d2 magic F27005E132A19F0C shift 13
+
+bitboard 0x00000244280000
+**********
+8........*
+7........*
+6........*
+5......1.*
+4.1...1..*
+3..1.1...*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d2 , count 5
+
+magic kind bishop square d2 magic DE7143CC6D6BA14F shift 7
+
+bitboard 0x08080808087600
+**********
+8........*
+7....1...*
+6....1...*
+5....1...*
+4....1...*
+3....1...*
+2.111.11.*
+1........*
+*abcdefgh*
+
+mobility for rook at square e2 , count 10
+
+magic kind rook square e2 magic 944BF6704D6689E3 shift 13
+
+bitboard 0x00004022140000
+**********
+8........*
+7........*
+6........*
+5.1......*
+4..1...1.*
+3...1.1..*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e2 , count 5
+
+magic kind bishop square e2 magic C21D33B16E12266B shift 7
+
+bitboard 0x04040404047a00
+**********
+8........*
+7.....1..*
+6.....1..*
+5.....1..*
+4.....1..*
+3.....1..*
+2.1111.1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square f2 , count 10
+
+magic kind rook square f2 magic D2A09DBD211DD7BC shift 12
+
+bitboard 0x004020100a0000
+**********
+8........*
+7........*
+6.1......*
+5..1.....*
+4...1....*
+3....1.1.*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f2 , count 5
+
+magic kind bishop square f2 magic 5A601074E0452D01 shift 7
+
+bitboard 0x02020202027c00
+**********
+8........*
+7......1.*
+6......1.*
+5......1.*
+4......1.*
+3......1.*
+2.11111..*
+1........*
+*abcdefgh*
+
+mobility for rook at square g2 , count 10
+
+magic kind rook square g2 magic 48817DD49248F66E shift 12
+
+bitboard 0x40201008040000
+**********
+8........*
+7.1......*
+6..1.....*
+5...1....*
+4....1...*
+3.....1..*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g2 , count 5
+
+magic kind bishop square g2 magic 1BF7BA10D479B7D9 shift 7
+
+bitboard 0x01010101017e00
+**********
+8........*
+7.......1*
+6.......1*
+5.......1*
+4.......1*
+3.......1*
+2.111111.*
+1........*
+*abcdefgh*
+
+mobility for rook at square h2 , count 11
+
+magic kind rook square h2 magic 92DF5F1E56099E54 shift 13
+
+bitboard 0x20100804020000
+**********
+8........*
+7..1.....*
+6...1....*
+5....1...*
+4.....1..*
+3......1.*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h2 , count 5
+
+magic kind bishop square h2 magic D60A6F3426765632 shift 7
+
+bitboard 0x808080807e8000
+**********
+8........*
+71.......*
+61.......*
+51.......*
+41.......*
+3.111111.*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a3 , count 11
+
+magic kind rook square a3 magic C80B2DCB658CB215 shift 13
+
+bitboard 0x08102040004000
+**********
+8........*
+7....1...*
+6...1....*
+5..1.....*
+4.1......*
+3........*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a3 , count 5
+
+magic kind bishop square a3 magic E5E2C0497F047D75 shift 7
+
+bitboard 0x404040403e4000
+**********
+8........*
+7.1......*
+6.1......*
+5.1......*
+4.1......*
+3..11111.*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b3 , count 10
+
+magic kind rook square b3 magic 13D462EE38A63663 shift 12
+
+bitboard 0x04081020002000
+**********
+8........*
+7.....1..*
+6....1...*
+5...1....*
+4..1.....*
+3........*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b3 , count 5
+
+magic kind bishop square b3 magic 6D55FC1937BA1B34 shift 7
+
+bitboard 0x202020205e2000
+**********
+8........*
+7..1.....*
+6..1.....*
+5..1.....*
+4..1.....*
+3.1.1111.*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c3 , count 10
+
+magic kind rook square c3 magic 27B7B07EDB48A040 shift 13
+
+bitboard 0x02040850005000
+**********
+8........*
+7......1.*
+6.....1..*
+5....1...*
+4.1.1....*
+3........*
+2.1.1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c3 , count 7
+
+magic kind bishop square c3 magic 1B9EC9C0F479FF18 shift 9
+
+bitboard 0x101010106e1000
+**********
+8........*
+7...1....*
+6...1....*
+5...1....*
+4...1....*
+3.11.111.*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d3 , count 10
+
+magic kind rook square d3 magic 749171A81EDDDC8A shift 13
+
+bitboard 0x00024428002800
+**********
+8........*
+7........*
+6......1.*
+5.1...1..*
+4..1.1...*
+3........*
+2..1.1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d3 , count 7
+
+magic kind bishop square d3 magic A3603CA1C0465F7E shift 9
+
+bitboard 0x08080808760800
+**********
+8........*
+7....1...*
+6....1...*
+5....1...*
+4....1...*
+3.111.11.*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e3 , count 10
+
+magic kind rook square e3 magic 3FDB6C263D80D23D shift 14
+
+bitboard 0x00402214001400
+**********
+8........*
+7........*
+6.1......*
+5..1...1.*
+4...1.1..*
+3........*
+2...1.1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e3 , count 7
+
+magic kind bishop square e3 magic CA949C3452B39DD3 shift 9
+
+bitboard 0x040404047a0400
+**********
+8........*
+7.....1..*
+6.....1..*
+5.....1..*
+4.....1..*
+3.1111.1.*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f3 , count 10
+
+magic kind rook square f3 magic 324D5A65FF1D9788 shift 13
+
+bitboard 0x4020100a000a00
+**********
+8........*
+7.1......*
+6..1.....*
+5...1....*
+4....1.1.*
+3........*
+2....1.1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f3 , count 7
+
+magic kind bishop square f3 magic BBEC506E558616C6 shift 10
+
+bitboard 0x020202027c0200
+**********
+8........*
+7......1.*
+6......1.*
+5......1.*
+4......1.*
+3.11111..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g3 , count 10
+
+magic kind rook square g3 magic 5D637CF4CB022301 shift 12
+
+bitboard 0x20100804000400
+**********
+8........*
+7..1.....*
+6...1....*
+5....1...*
+4.....1..*
+3........*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g3 , count 5
+
+magic kind bishop square g3 magic F9FB4B4DDEB276B5 shift 7
+
+bitboard 0x010101017e0100
+**********
+8........*
+7.......1*
+6.......1*
+5.......1*
+4.......1*
+3.111111.*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h3 , count 11
+
+magic kind rook square h3 magic 9B8E99FF46E32985 shift 14
+
+bitboard 0x10080402000200
+**********
+8........*
+7...1....*
+6....1...*
+5.....1..*
+4......1.*
+3........*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h3 , count 5
+
+magic kind bishop square h3 magic FF40595E6B8A84FF shift 7
+
+bitboard 0x8080807e808000
+**********
+8........*
+71.......*
+61.......*
+51.......*
+4.111111.*
+31.......*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a4 , count 11
+
+magic kind rook square a4 magic 5DF45CC8C9836E6A shift 13
+
+bitboard 0x10204000402000
+**********
+8........*
+7...1....*
+6..1.....*
+5.1......*
+4........*
+3.1......*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a4 , count 5
+
+magic kind bishop square a4 magic 524194EB922B79D5 shift 7
+
+bitboard 0x4040403e404000
+**********
+8........*
+7.1......*
+6.1......*
+5.1......*
+4..11111.*
+3.1......*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b4 , count 10
+
+magic kind rook square b4 magic DC349AC3ECC7322F shift 12
+
+bitboard 0x08102000201000
+**********
+8........*
+7....1...*
+6...1....*
+5..1.....*
+4........*
+3..1.....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b4 , count 5
+
+magic kind bishop square b4 magic 1652B96F5BC176FD shift 7
+
+bitboard 0x2020205e202000
+**********
+8........*
+7..1.....*
+6..1.....*
+5..1.....*
+4.1.1111.*
+3..1.....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c4 , count 10
+
+magic kind rook square c4 magic 9DC696C7A7A8B216 shift 12
+
+bitboard 0x04085000500800
+**********
+8........*
+7.....1..*
+6....1...*
+5.1.1....*
+4........*
+3.1.1....*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c4 , count 7
+
+magic kind bishop square c4 magic DE00DCD4C701B8E1 shift 9
+
+bitboard 0x1010106e101000
+**********
+8........*
+7...1....*
+6...1....*
+5...1....*
+4.11.111.*
+3...1....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d4 , count 10
+
+magic kind rook square d4 magic 84B74D435537E8BC shift 13
+
+bitboard 0x02442800284400
+**********
+8........*
+7......1.*
+6.1...1..*
+5..1.1...*
+4........*
+3..1.1...*
+2.1...1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d4 , count 9
+
+magic kind bishop square d4 magic 5D4867C0B77F2B2F shift 12
+
+bitboard 0x08080876080800
+**********
+8........*
+7....1...*
+6....1...*
+5....1...*
+4.111.11.*
+3....1...*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e4 , count 10
+
+magic kind rook square e4 magic 1C0152EB5DE7064A shift 13
+
+bitboard 0x40221400142200
+**********
+8........*
+7.1......*
+6..1...1.*
+5...1.1..*
+4........*
+3...1.1..*
+2..1...1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e4 , count 9
+
+magic kind bishop square e4 magic 678942DFCE38E577 shift 12
+
+bitboard 0x0404047a040400
+**********
+8........*
+7.....1..*
+6.....1..*
+5.....1..*
+4.1111.1.*
+3.....1..*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f4 , count 10
+
+magic kind rook square f4 magic 4829A003BBC5FB38 shift 13
+
+bitboard 0x20100a000a1000
+**********
+8........*
+7..1.....*
+6...1....*
+5....1.1.*
+4........*
+3....1.1.*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f4 , count 7
+
+magic kind bishop square f4 magic 4348A72215F3A984 shift 9
+
+bitboard 0x0202027c020200
+**********
+8........*
+7......1.*
+6......1.*
+5......1.*
+4.11111..*
+3......1.*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g4 , count 10
+
+magic kind rook square g4 magic 61E52D5D4A29862D shift 12
+
+bitboard 0x10080400040800
+**********
+8........*
+7...1....*
+6....1...*
+5.....1..*
+4........*
+3.....1..*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g4 , count 5
+
+magic kind bishop square g4 magic DA8DB872F3AAB2C5 shift 7
+
+bitboard 0x0101017e010100
+**********
+8........*
+7.......1*
+6.......1*
+5.......1*
+4.111111.*
+3.......1*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h4 , count 11
+
+magic kind rook square h4 magic ADBD56E970AFBD4A shift 13
+
+bitboard 0x08040200020400
+**********
+8........*
+7....1...*
+6.....1..*
+5......1.*
+4........*
+3......1.*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h4 , count 5
+
+magic kind bishop square h4 magic C921513490914952 shift 7
+
+bitboard 0x80807e80808000
+**********
+8........*
+71.......*
+61.......*
+5.111111.*
+41.......*
+31.......*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a5 , count 11
+
+magic kind rook square a5 magic 82718344DDB027D8 shift 14
+
+bitboard 0x20400040201000
+**********
+8........*
+7..1.....*
+6.1......*
+5........*
+4.1......*
+3..1.....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a5 , count 5
+
+magic kind bishop square a5 magic E52A8FE63D350700 shift 7
+
+bitboard 0x40403e40404000
+**********
+8........*
+7.1......*
+6.1......*
+5..11111.*
+4.1......*
+3.1......*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b5 , count 10
+
+magic kind rook square b5 magic 546639ACF360D995 shift 12
+
+bitboard 0x10200020100800
+**********
+8........*
+7...1....*
+6..1.....*
+5........*
+4..1.....*
+3...1....*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b5 , count 5
+
+magic kind bishop square b5 magic 4A10BBDDA47FEF1C shift 7
+
+bitboard 0x20205e20202000
+**********
+8........*
+7..1.....*
+6..1.....*
+5.1.1111.*
+4..1.....*
+3..1.....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c5 , count 10
+
+magic kind rook square c5 magic 6FFE78DF9D703BF1 shift 13
+
+bitboard 0x08500050080400
+**********
+8........*
+7....1...*
+6.1.1....*
+5........*
+4.1.1....*
+3....1...*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c5 , count 7
+
+magic kind bishop square c5 magic 6B744283256722AC shift 9
+
+bitboard 0x10106e10101000
+**********
+8........*
+7...1....*
+6...1....*
+5.11.111.*
+4...1....*
+3...1....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d5 , count 10
+
+magic kind rook square d5 magic 5B6A532A59E9941D shift 13
+
+bitboard 0x44280028440200
+**********
+8........*
+7.1...1..*
+6..1.1...*
+5........*
+4..1.1...*
+3.1...1..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d5 , count 9
+
+magic kind bishop square d5 magic 4FF6CEF034A43656 shift 12
+
+bitboard 0x08087608080800
+**********
+8........*
+7....1...*
+6....1...*
+5.111.11.*
+4....1...*
+3....1...*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e5 , count 10
+
+magic kind rook square e5 magic BFCA0634054F44DB shift 13
+
+bitboard 0x22140014224000
+**********
+8........*
+7..1...1.*
+6...1.1..*
+5........*
+4...1.1..*
+3..1...1.*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e5 , count 9
+
+magic kind bishop square e5 magic 6071A8A81935B7A4 shift 13
+
+bitboard 0x04047a04040400
+**********
+8........*
+7.....1..*
+6.....1..*
+5.1111.1.*
+4.....1..*
+3.....1..*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f5 , count 10
+
+magic kind rook square f5 magic 48873D90D91D20C4 shift 13
+
+bitboard 0x100a000a102000
+**********
+8........*
+7...1....*
+6....1.1.*
+5........*
+4....1.1.*
+3...1....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f5 , count 7
+
+magic kind bishop square f5 magic 158042D1C511AB88 shift 9
+
+bitboard 0x02027c02020200
+**********
+8........*
+7......1.*
+6......1.*
+5.11111..*
+4......1.*
+3......1.*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g5 , count 10
+
+magic kind rook square g5 magic 0547A1AD948401FF shift 12
+
+bitboard 0x08040004081000
+**********
+8........*
+7....1...*
+6.....1..*
+5........*
+4.....1..*
+3....1...*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g5 , count 5
+
+magic kind bishop square g5 magic 9D2CC83D063B4DFD shift 7
+
+bitboard 0x01017e01010100
+**********
+8........*
+7.......1*
+6.......1*
+5.111111.*
+4.......1*
+3.......1*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h5 , count 11
+
+magic kind rook square h5 magic 7F5255B2126897E2 shift 14
+
+bitboard 0x04020002040800
+**********
+8........*
+7.....1..*
+6......1.*
+5........*
+4......1.*
+3.....1..*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h5 , count 5
+
+magic kind bishop square h5 magic ACDB9872491587B8 shift 7
+
+bitboard 0x807e8080808000
+**********
+8........*
+71.......*
+6.111111.*
+51.......*
+41.......*
+31.......*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a6 , count 11
+
+magic kind rook square a6 magic FB1E4F899D35A9B7 shift 13
+
+bitboard 0x40004020100800
+**********
+8........*
+7.1......*
+6........*
+5.1......*
+4..1.....*
+3...1....*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a6 , count 5
+
+magic kind bishop square a6 magic 9EFCB4EEDBE9CEA6 shift 7
+
+bitboard 0x403e4040404000
+**********
+8........*
+7.1......*
+6..11111.*
+5.1......*
+4.1......*
+3.1......*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b6 , count 10
+
+magic kind rook square b6 magic 95F755AB1D409B68 shift 13
+
+bitboard 0x20002010080400
+**********
+8........*
+7..1.....*
+6........*
+5..1.....*
+4...1....*
+3....1...*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b6 , count 5
+
+magic kind bishop square b6 magic 8947A08366A01B40 shift 7
+
+bitboard 0x205e2020202000
+**********
+8........*
+7..1.....*
+6.1.1111.*
+5..1.....*
+4..1.....*
+3..1.....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c6 , count 10
+
+magic kind rook square c6 magic 6D4B4C55C83FB3F8 shift 13
+
+bitboard 0x50005008040200
+**********
+8........*
+7.1.1....*
+6........*
+5.1.1....*
+4....1...*
+3.....1..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c6 , count 7
+
+magic kind bishop square c6 magic 601EC1B12248CC0E shift 9
+
+bitboard 0x106e1010101000
+**********
+8........*
+7...1....*
+6.11.111.*
+5...1....*
+4...1....*
+3...1....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d6 , count 10
+
+magic kind rook square d6 magic 21CF7E165E59E266 shift 13
+
+bitboard 0x28002844020000
+**********
+8........*
+7..1.1...*
+6........*
+5..1.1...*
+4.1...1..*
+3......1.*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d6 , count 7
+
+magic kind bishop square d6 magic 45294D9E8865B80A shift 8
+
+bitboard 0x08760808080800
+**********
+8........*
+7....1...*
+6.111.11.*
+5....1...*
+4....1...*
+3....1...*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e6 , count 10
+
+magic kind rook square e6 magic 0238104C1C516558 shift 13
+
+bitboard 0x14001422400000
+**********
+8........*
+7...1.1..*
+6........*
+5...1.1..*
+4..1...1.*
+3.1......*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e6 , count 7
+
+magic kind bishop square e6 magic 8011DAC7298A0C86 shift 9
+
+bitboard 0x047a0404040400
+**********
+8........*
+7.....1..*
+6.1111.1.*
+5.....1..*
+4.....1..*
+3.....1..*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f6 , count 10
+
+magic kind rook square f6 magic 125F287567CE1964 shift 13
+
+bitboard 0x0a000a10204000
+**********
+8........*
+7....1.1.*
+6........*
+5....1.1.*
+4...1....*
+3..1.....*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f6 , count 7
+
+magic kind bishop square f6 magic F8EEA5DD591D9B30 shift 9
+
+bitboard 0x027c0202020200
+**********
+8........*
+7......1.*
+6.11111..*
+5......1.*
+4......1.*
+3......1.*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g6 , count 10
+
+magic kind rook square g6 magic C49E08997C7824DA shift 12
+
+bitboard 0x04000408102000
+**********
+8........*
+7.....1..*
+6........*
+5.....1..*
+4....1...*
+3...1....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g6 , count 5
+
+magic kind bishop square g6 magic F70CE1D794CF3DC5 shift 7
+
+bitboard 0x017e0101010100
+**********
+8........*
+7.......1*
+6.111111.*
+5.......1*
+4.......1*
+3.......1*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h6 , count 11
+
+magic kind rook square h6 magic 3111CD6B10C6FFD1 shift 13
+
+bitboard 0x02000204081000
+**********
+8........*
+7......1.*
+6........*
+5......1.*
+4.....1..*
+3....1...*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h6 , count 5
+
+magic kind bishop square h6 magic 234AFDEA3EE3F984 shift 7
+
+bitboard 0x7e808080808000
+**********
+8........*
+7.111111.*
+61.......*
+51.......*
+41.......*
+31.......*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a7 , count 11
+
+magic kind rook square a7 magic DA5907E50BCB5911 shift 13
+
+bitboard 0x00402010080400
+**********
+8........*
+7........*
+6.1......*
+5..1.....*
+4...1....*
+3....1...*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a7 , count 5
+
+magic kind bishop square a7 magic 1032746BCFAB47B7 shift 7
+
+bitboard 0x3e404040404000
+**********
+8........*
+7..11111.*
+6.1......*
+5.1......*
+4.1......*
+3.1......*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b7 , count 10
+
+magic kind rook square b7 magic 363A96EFF0278182 shift 12
+
+bitboard 0x00201008040200
+**********
+8........*
+7........*
+6..1.....*
+5...1....*
+4....1...*
+3.....1..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b7 , count 5
+
+magic kind bishop square b7 magic BCC2C3377E8EC409 shift 7
+
+bitboard 0x5e202020202000
+**********
+8........*
+7.1.1111.*
+6..1.....*
+5..1.....*
+4..1.....*
+3..1.....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c7 , count 10
+
+magic kind rook square c7 magic BE8A5051B6FE601B shift 13
+
+bitboard 0x00500804020000
+**********
+8........*
+7........*
+6.1.1....*
+5....1...*
+4.....1..*
+3......1.*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c7 , count 5
+
+magic kind bishop square c7 magic 080065ED6D90C5EE shift 7
+
+bitboard 0x6e101010101000
+**********
+8........*
+7.11.111.*
+6...1....*
+5...1....*
+4...1....*
+3...1....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d7 , count 10
+
+magic kind rook square d7 magic AE21E3BA811AFCE8 shift 13
+
+bitboard 0x00284402000000
+**********
+8........*
+7........*
+6..1.1...*
+5.1...1..*
+4......1.*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d7 , count 5
+
+magic kind bishop square d7 magic FD316950CD50E8E9 shift 7
+
+bitboard 0x76080808080800
+**********
+8........*
+7.111.11.*
+6....1...*
+5....1...*
+4....1...*
+3....1...*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e7 , count 10
+
+magic kind rook square e7 magic 8012A0F9F5246EE0 shift 13
+
+bitboard 0x00142240000000
+**********
+8........*
+7........*
+6...1.1..*
+5..1...1.*
+4.1......*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e7 , count 5
+
+magic kind bishop square e7 magic 5E5DD90B26929E41 shift 7
+
+bitboard 0x7a040404040400
+**********
+8........*
+7.1111.1.*
+6.....1..*
+5.....1..*
+4.....1..*
+3.....1..*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f7 , count 10
+
+magic kind rook square f7 magic A7D8AB1BE57101F9 shift 13
+
+bitboard 0x000a1020400000
+**********
+8........*
+7........*
+6....1.1.*
+5...1....*
+4..1.....*
+3.1......*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f7 , count 5
+
+magic kind bishop square f7 magic 15867BD8353C0E9A shift 7
+
+bitboard 0x7c020202020200
+**********
+8........*
+7.11111..*
+6......1.*
+5......1.*
+4......1.*
+3......1.*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g7 , count 10
+
+magic kind rook square g7 magic 7D302B764188D312 shift 12
+
+bitboard 0x00040810204000
+**********
+8........*
+7........*
+6.....1..*
+5....1...*
+4...1....*
+3..1.....*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g7 , count 5
+
+magic kind bishop square g7 magic C758A197575A41D4 shift 7
+
+bitboard 0x7e010101010100
+**********
+8........*
+7.111111.*
+6.......1*
+5.......1*
+4.......1*
+3.......1*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h7 , count 11
+
+magic kind rook square h7 magic 65EC9EDEF85D4416 shift 13
+
+bitboard 0x00020408102000
+**********
+8........*
+7........*
+6......1.*
+5.....1..*
+4....1...*
+3...1....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h7 , count 5
+
+magic kind bishop square h7 magic 105F2EDFB14688E3 shift 7
+
+bitboard 0x7e80808080808000
+**********
+8.111111.*
+71.......*
+61.......*
+51.......*
+41.......*
+31.......*
+21.......*
+1........*
+*abcdefgh*
+
+mobility for rook at square a8 , count 12
+
+magic kind rook square a8 magic 9CBCEAFFF5B01686 shift 14
+
+bitboard 0x40201008040200
+**********
+8........*
+7.1......*
+6..1.....*
+5...1....*
+4....1...*
+3.....1..*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for bishop at square a8 , count 6
+
+magic kind bishop square a8 magic F16BB99A9A4798B8 shift 7
+
+bitboard 0x3e40404040404000
+**********
+8..11111.*
+7.1......*
+6.1......*
+5.1......*
+4.1......*
+3.1......*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for rook at square b8 , count 11
+
+magic kind rook square b8 magic E58913D92F480934 shift 13
+
+bitboard 0x20100804020000
+**********
+8........*
+7..1.....*
+6...1....*
+5....1...*
+4.....1..*
+3......1.*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square b8 , count 5
+
+magic kind bishop square b8 magic 6563A5C7423AA8BE shift 7
+
+bitboard 0x5e20202020202000
+**********
+8.1.1111.*
+7..1.....*
+6..1.....*
+5..1.....*
+4..1.....*
+3..1.....*
+2..1.....*
+1........*
+*abcdefgh*
+
+mobility for rook at square c8 , count 11
+
+magic kind rook square c8 magic 8C31070B86700851 shift 14
+
+bitboard 0x50080402000000
+**********
+8........*
+7.1.1....*
+6....1...*
+5.....1..*
+4......1.*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square c8 , count 5
+
+magic kind bishop square c8 magic DE34C402B5DF95B9 shift 7
+
+bitboard 0x6e10101010101000
+**********
+8.11.111.*
+7...1....*
+6...1....*
+5...1....*
+4...1....*
+3...1....*
+2...1....*
+1........*
+*abcdefgh*
+
+mobility for rook at square d8 , count 11
+
+magic kind rook square d8 magic C4CB8C96A177C33E shift 14
+
+bitboard 0x28440200000000
+**********
+8........*
+7..1.1...*
+6.1...1..*
+5......1.*
+4........*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square d8 , count 5
+
+magic kind bishop square d8 magic B5022546C69FB75B shift 7
+
+bitboard 0x7608080808080800
+**********
+8.111.11.*
+7....1...*
+6....1...*
+5....1...*
+4....1...*
+3....1...*
+2....1...*
+1........*
+*abcdefgh*
+
+mobility for rook at square e8 , count 11
+
+magic kind rook square e8 magic 0AED4C5ACA18D2A6 shift 14
+
+bitboard 0x14224000000000
+**********
+8........*
+7...1.1..*
+6..1...1.*
+5.1......*
+4........*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square e8 , count 5
+
+magic kind bishop square e8 magic F4BFE28E480CFB0E shift 7
+
+bitboard 0x7a04040404040400
+**********
+8.1111.1.*
+7.....1..*
+6.....1..*
+5.....1..*
+4.....1..*
+3.....1..*
+2.....1..*
+1........*
+*abcdefgh*
+
+mobility for rook at square f8 , count 11
+
+magic kind rook square f8 magic D6739EC01260B9E2 shift 13
+
+bitboard 0x0a102040000000
+**********
+8........*
+7....1.1.*
+6...1....*
+5..1.....*
+4.1......*
+3........*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square f8 , count 5
+
+magic kind bishop square f8 magic 933B392D060A76A6 shift 7
+
+bitboard 0x7c02020202020200
+**********
+8.11111..*
+7......1.*
+6......1.*
+5......1.*
+4......1.*
+3......1.*
+2......1.*
+1........*
+*abcdefgh*
+
+mobility for rook at square g8 , count 11
+
+magic kind rook square g8 magic 389DD3E37E9AF856 shift 13
+
+bitboard 0x04081020400000
+**********
+8........*
+7.....1..*
+6....1...*
+5...1....*
+4..1.....*
+3.1......*
+2........*
+1........*
+*abcdefgh*
+
+mobility for bishop at square g8 , count 5
+
+magic kind bishop square g8 magic ABE9D97E46B9E19D shift 7
+
+bitboard 0x7e01010101010100
+**********
+8.111111.*
+7.......1*
+6.......1*
+5.......1*
+4.......1*
+3.......1*
+2.......1*
+1........*
+*abcdefgh*
+
+mobility for rook at square h8 , count 12
+
+magic kind rook square h8 magic 7C6916AFE996F4CB shift 15
+
+bitboard 0x02040810204000
+**********
+8........*
+7......1.*
+6.....1..*
+5....1...*
+4...1....*
+3..1.....*
+2.1......*
+1........*
+*abcdefgh*
+
+mobility for bishop at square h8 , count 6
+
+magic kind bishop square h8 magic 378A94E2AB11D5FD shift 8
+

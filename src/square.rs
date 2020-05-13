@@ -6,6 +6,8 @@ extern crate rand;
 
 use rand::Rng;
 
+use std::io::{BufWriter, Write};
+
 /// Rank type represents the rank of a square as an unsigned int
 pub type Rank = usize;
 /// Rank type represents the file of a square as an unsigned int
@@ -657,4 +659,53 @@ pub fn magic_attack(sq: Square, attack: Bitboard) -> Bitboard {
     }
 
     attack & mask
+}
+
+pub fn log_find_magic_and_shift(
+    bw: &mut BufWriter<std::fs::File>,
+    sq: Square,
+    attack: Bitboard,
+    name: &str,
+) {
+    let data = format!(
+        "{}\nmobility for {} at square {} , count {}\n\n",
+        attack.pretty_print_string(),
+        name,
+        sq.uci(),
+        attack.count_ones()
+    );
+
+    (*bw)
+        .write_all(data.as_bytes())
+        .expect("Unable to write data.");
+
+    println!("{}", data);
+
+    let result = find_magic_and_shift(attack, 20, 7, 100);
+
+    let data = format!(
+        "magic kind {} square {} magic {:016X} shift {}\n\n",
+        name,
+        sq.uci(),
+        result.0,
+        result.1
+    );
+
+    (*bw)
+        .write_all(data.as_bytes())
+        .expect("Unable to write data.");
+
+    println!("{}", data);
+}
+
+pub fn find_and_log_magics() {
+    let file = std::fs::File::create("magics.txt").expect("Error: Unable to create magics file.");
+
+    let mut bw = BufWriter::new(file);
+
+    for sq in 0..BOARD_AREA {
+        log_find_magic_and_shift(&mut bw, sq, magic_attack(sq, ROOK_ATTACK[sq]), "rook");
+
+        log_find_magic_and_shift(&mut bw, sq, magic_attack(sq, BISHOP_ATTACK[sq]), "bishop");
+    }
 }

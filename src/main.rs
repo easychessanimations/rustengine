@@ -75,25 +75,6 @@ fn enum_occup_demo() {
     }
 }
 
-fn log_find_magic_and_shift(sq: Square, attack: Bitboard) {
-    println!(
-        "{}\nsquare {} , count {}",
-        attack.pretty_print_string(),
-        sq.uci(),
-        attack.count_ones()
-    );
-
-    println!("{:?}\n", find_magic_and_shift(attack, 20, 7, 20));
-}
-
-fn magic_demo() {
-    for sq in 0..BOARD_AREA {
-        log_find_magic_and_shift(sq, magic_attack(sq, ROOK_ATTACK[sq]));
-
-        log_find_magic_and_shift(sq, magic_attack(sq, BISHOP_ATTACK[sq]));
-    }
-}
-
 fn main() {
     println!("\nhi rustengine\n");
 
@@ -106,7 +87,7 @@ fn main() {
     }
 
     if true {
-        magic_demo();
+        find_and_log_magics();
     }
 
     println!("\nbye rustengine\n");
