@@ -681,7 +681,11 @@ pub fn log_find_magic_and_shift(
 
     println!("{}", data);
 
-    let result = find_magic_and_shift(attack, 20, 7, 100);
+    let result = find_magic_and_shift(attack, 14, if name == "bishop" { 5 } else { 10 }, 5000);
+
+    if !result.2 {
+        panic!("shift too large")
+    }
 
     let data = format!(
         "magic kind {} square {} magic {:016X} shift {}\n\n",
