@@ -62,6 +62,7 @@ pub trait DeltaBuffer {
     fn get(&self, i: usize) -> &Delta;
 }
 
+// DeltaBuffer trait adds methods to 4 buffer that hold deltas
 impl DeltaBuffer for [Delta; 4] {
     /// len tells the length of the delta buffer
     fn len(&self) -> usize {
@@ -73,6 +74,7 @@ impl DeltaBuffer for [Delta; 4] {
     }
 }
 
+// DeltaBuffer trait adds methods to 8 buffer that hold deltas
 impl DeltaBuffer for [Delta; 8] {
     /// len tells the length of the delta buffer
     fn len(&self) -> usize {
@@ -307,6 +309,7 @@ pub trait SquareTrait {
     fn add_delta_occup(self, delta: &Delta, occup: Bitboard) -> (Square, bool);
 }
 
+/// SquareTrait adds methods to a Square
 impl SquareTrait for Square {
     /// returns the rank of the square
     fn rank(self) -> Rank {
@@ -520,6 +523,7 @@ pub static BISHOP_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     }
     at
 });
+/// BISHOP_MAGIC_ATTACK is the magic attack table of bishop
 pub static BISHOP_MAGIC_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     let mut at = EMPTY_ATTACK_TABLE;
     for sq in 0..BOARD_AREA {
@@ -535,6 +539,7 @@ pub static ROOK_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     }
     at
 });
+/// ROOK_MAGIC_ATTACK is the magic attack table of rook
 pub static ROOK_MAGIC_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
     let mut at = EMPTY_ATTACK_TABLE;
     for sq in 0..BOARD_AREA {
@@ -678,6 +683,7 @@ pub fn magic_attack(sq: Square, attack: Bitboard) -> Bitboard {
     attack & mask
 }
 
+/// find and log magic and shift
 pub fn log_find_magic_and_shift(
     bw: &mut BufWriter<std::fs::File>,
     sq: Square,
@@ -719,6 +725,7 @@ pub fn log_find_magic_and_shift(
     println!("{}", data);
 }
 
+/// find and log all magics
 pub fn find_and_log_magics() {
     let file = std::fs::File::create("magics.txt").expect("Error: Unable to create magics file.");
 
@@ -731,12 +738,14 @@ pub fn find_and_log_magics() {
     }
 }
 
+/// MagicInfo records the magic and shift for a square
 pub struct MagicInfo {
     sq: Square,
     magic: u64,
     shift: usize,
 }
 
+/// BISHOP_MAGICS records bishop magics
 pub const BISHOP_MAGICS: [MagicInfo; BOARD_AREA] = [
     MagicInfo {
         sq: SQUARE_A1,
@@ -1060,6 +1069,7 @@ pub const BISHOP_MAGICS: [MagicInfo; BOARD_AREA] = [
     },
 ];
 
+/// ROOK_MAGICS records rook magics
 pub const ROOK_MAGICS: [MagicInfo; BOARD_AREA] = [
     MagicInfo {
         sq: SQUARE_A1,
@@ -1383,6 +1393,7 @@ pub const ROOK_MAGICS: [MagicInfo; BOARD_AREA] = [
     },
 ];
 
+/// returns the total number of magic look up table items
 pub fn total_magic_space(magics: [MagicInfo; BOARD_AREA]) -> usize {
     let mut total = 0;
     for i in 0..BOARD_AREA {
@@ -1392,9 +1403,12 @@ pub fn total_magic_space(magics: [MagicInfo; BOARD_AREA]) -> usize {
     total
 }
 
+/// BISHOP_MAGIC_UNITS tells the total number of bishop lookup table items
 pub const BISHOP_MAGIC_UNITS: usize = 18976;
+/// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
 
+/// create magic lookup table
 pub fn create_magic_lookup_table<T: DeltaBuffer>(
     mis: &[MagicInfo; BOARD_AREA],
     at: &AttackTable,
@@ -1430,12 +1444,15 @@ pub fn create_magic_lookup_table<T: DeltaBuffer>(
     table
 }
 
+/// MAGIC_LOOKUP_BISHOP is the magic lookup table for bishop
 pub static MAGIC_LOOKUP_BISHOP: Lazy<Vec<Vec<Bitboard>>> =
     Lazy::new(|| create_magic_lookup_table(&BISHOP_MAGICS, &BISHOP_MAGIC_ATTACK, &BISHOP_DELTAS));
 
+/// MAGIC_LOOKUP_ROOK is the magic lookup table for rook
 pub static MAGIC_LOOKUP_ROOK: Lazy<Vec<Vec<Bitboard>>> =
     Lazy::new(|| create_magic_lookup_table(&ROOK_MAGICS, &ROOK_MAGIC_ATTACK, &ROOK_DELTAS));
 
+/// MoveGenNode lists the move generation modes
 #[derive(Copy, Clone)]
 pub enum MoveGenMode {
     Violent,
@@ -1443,6 +1460,7 @@ pub enum MoveGenMode {
     All,
 }
 
+/// returns sliding mobility
 pub fn get_sliding_mobility(
     gen_mode: MoveGenMode,
     sq: Square,
@@ -1463,6 +1481,7 @@ pub fn get_sliding_mobility(
     }
 }
 
+/// returns bishop mobility
 pub fn bishop_mobility(
     gen_mode: MoveGenMode,
     sq: Square,
@@ -1480,6 +1499,7 @@ pub fn bishop_mobility(
     )
 }
 
+/// returns rook mobility
 pub fn rook_mobility(
     gen_mode: MoveGenMode,
     sq: Square,
@@ -1497,6 +1517,7 @@ pub fn rook_mobility(
     )
 }
 
+/// returns queen mobility
 pub fn queen_mobility(
     gen_mode: MoveGenMode,
     sq: Square,
