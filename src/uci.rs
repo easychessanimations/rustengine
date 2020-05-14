@@ -126,6 +126,12 @@ pub fn magic_space() {
 }
 
 impl Uci {
+    pub fn execute_uci_command(&self) {
+        println!("id name {}", self.engine_name);
+        println!("id author {}\n", self.engine_author);
+        println!("uciok");
+    }
+
     pub fn process_uci_command(&self, line: String) -> bool {
         let parts: Vec<&str> = line.split(" ").collect();
 
@@ -133,6 +139,10 @@ impl Uci {
 
         if command == "quit" || command == "q" || command == "exit" || command == "x" {
             return false;
+        }
+
+        if command == "uci" {
+            self.execute_uci_command();
         }
 
         if command == "demo" {
