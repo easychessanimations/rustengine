@@ -1,4 +1,5 @@
 pub mod bitboard;
+pub mod constants;
 pub mod piece;
 pub mod square;
 

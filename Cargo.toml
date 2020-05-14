@@ -1,6 +1,6 @@
 [package]
 name = "rustengine"
-version = "1.0.38"
+version = "1.0.39"
 license = "MIT"
 authors = ["easychessanimations <chessbotroulette@gmail.com>"]
 description = "Rust bitboard multi variant uci chess analysis engine."

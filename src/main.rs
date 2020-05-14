@@ -1,4 +1,5 @@
 use rustenginelib::bitboard::*;
+use rustenginelib::constants::*;
 use rustenginelib::piece::*;
 use rustenginelib::square::*;
 
