@@ -22,6 +22,29 @@ pub type Color = usize;
 /// Piece type represents a chess piece as an unsigned int
 pub type Piece = usize;
 
+/// returns the piece for the fen symbol
+pub fn fen_symbol_to_piece(letter: &str) -> Piece {
+    match letter {
+        "p" => color_figure(BLACK, PAWN),
+        "P" => color_figure(WHITE, PAWN),
+        "n" => color_figure(BLACK, KNIGHT),
+        "N" => color_figure(WHITE, KNIGHT),
+        "b" => color_figure(BLACK, BISHOP),
+        "B" => color_figure(WHITE, BISHOP),
+        "r" => color_figure(BLACK, ROOK),
+        "R" => color_figure(WHITE, ROOK),
+        "q" => color_figure(BLACK, QUEEN),
+        "Q" => color_figure(WHITE, QUEEN),
+        "k" => color_figure(BLACK, KING),
+        "K" => color_figure(WHITE, KING),
+        "s" => color_figure(BLACK, SENTRY),
+        "S" => color_figure(WHITE, SENTRY),
+        "j" => color_figure(BLACK, JAILER),
+        "J" => color_figure(WHITE, JAILER),
+        _ => NO_PIECE,
+    }
+}
+
 /// returns a piece from color and figure
 pub fn color_figure(col: Color, fig: Figure) -> Piece {
     (2 * fig) + col

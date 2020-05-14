@@ -22,15 +22,30 @@ pub struct VariantInfo {
 
 /// State implementation
 impl State {
+    /// parses piece placement
     pub fn parse_piece_placement(fen: &str) -> [Piece; BOARD_AREA] {
         let mut rep = EMPTY_REP;
-        let rank:Rank=0;
-        let file:File=0;
+        let mut rank: Rank = 0;
+        let mut file: File = 0;
         for i in 0..fen.len() {
-        	match fen[i..i+1]{
-        		"n"=>rep[rank_file(rank,file)]=color_figure[BLACK,KNIGHT],
-        		_=>(),
-        	}
+            let c = &fen[i..i + 1];
+            if c == " " {
+                return rep;
+            } else if c == "/" {
+                file = 0;
+                rank += 1;
+            } else if c >= "1" && c <= "8" {
+                for _ in 0..c.parse().expect("should not happen") {
+                    rep[(LAST_RANK - rank) * NUM_FILES + file] = NO_PIECE;
+                    file += 1;
+                }
+            } else {
+                let p = fen_symbol_to_piece(c);
+                if p != NO_PIECE {
+                    rep[(LAST_RANK - rank) * NUM_FILES + file] = p;
+                    file += 1;
+                }
+            }
         }
         rep
     }

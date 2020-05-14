@@ -87,6 +87,9 @@ pub const PIECE_FEN_SYMBOLS: [&str; 36] = [
     "s", "S", "j", "J",
 ];
 
+/// NO_FIGURE represents no piece on a given square
+pub const NO_PIECE: Piece = 0;
+
 /// NO_FIGURE represents no figure on a given square
 pub const NO_FIGURE: Figure = 0;
 /// PAWN represents chess figure 'pawn'
