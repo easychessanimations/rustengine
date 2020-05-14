@@ -22,11 +22,16 @@ pub struct VariantInfo {
 
 /// State implementation
 impl State {
+	pub fn parse_piece_placement(fen:String)->[Piece;BOARD_AREA]{
+		let mut rep = EMPTY_REP;
+		rep
+	}
+
     /// creates a new empty State
     pub fn new() -> State {
         State {
             variant: DEFAULT_VARIANT,
-            rep: EMPTY_REP,
+            rep: parse_piece_placement(VARIANT_INFOS[DEFAULT_VARIANT].start_fen),
             by_color: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
         }
     }
