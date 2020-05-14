@@ -246,7 +246,7 @@ impl SquareTrait for Square {
     }
 }
 
-/// returns jump attack bitboard from 4 deltas
+/// returns jump attack bitboard from deltas
 pub fn jump_attack<T: DeltaBuffer>(sq: Square, deltas: &T, occup: Bitboard) -> Bitboard {
     let mut bb: Bitboard = 0;
     for i in 0..deltas.len() {
