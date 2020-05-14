@@ -1,19 +1,23 @@
 use crate::bitboard::*;
 use crate::constants::*;
+use crate::lineargame::*;
 use crate::piece::*;
 use crate::square::*;
+//use crate::state::*;
 
 use std::io::{self, BufRead};
 
 pub struct Uci {
     pub engine_name: String,
     pub engine_author: String,
+    pub linear_game: LinearGame,
 }
 
 pub fn create_default_uci() -> Uci {
     Uci {
         engine_name: "rustengine".to_string(),
         engine_author: "easychessanimations".to_string(),
+        linear_game: LinearGame::new(),
     }
 }
 
@@ -143,6 +147,10 @@ impl Uci {
 
         if command == "uci" {
             self.execute_uci_command();
+        }
+
+        if command == "i" {
+            self.linear_game.print();
         }
 
         if command == "demo" {

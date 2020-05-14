@@ -7,6 +7,22 @@ pub const BISHOP_MAGIC_UNITS: usize = 18976;
 /// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
 
+/// MAX_STATES tells the maximum number of states in a LinearGaeme
+pub const MAX_STATES: usize = 100;
+
+/// EMPTRY_REP represents and empty chess board
+pub const EMPTY_REP: [Piece; BOARD_AREA] = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+
+/// FIGURE_ARRAY_SIZE tells the number of possible figures
+pub const FIGURE_ARRAY_SIZE: usize = 18;
+
+/// EMTPY_FIGURE_BITBOARDS represents an empty bitboard for all possible figures
+pub const EMTPY_FIGURE_BITBOARDS: [Bitboard; FIGURE_ARRAY_SIZE] =
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
 /// BITBOARD_MIDDLE represents the bitboard for the middle of the board
 pub const BITBOARD_MIDDLE: Bitboard = 0x007E7E7E7E7E7E00;
 /// BITBOARD_RANK_8 represents the bitboard for the 8th rank of the board
