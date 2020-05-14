@@ -27,23 +27,101 @@ impl State {
         let mut rep = EMPTY_REP;
         let mut rank: Rank = 0;
         let mut file: File = 0;
+        let mut lancer_color = 0;
+        let mut lancer_has_north = false;
+        let mut lancer_index = 0;
         for i in 0..fen.len() {
             let c = &fen[i..i + 1];
-            if c == " " {
-                return rep;
-            } else if c == "/" {
-                file = 0;
-                rank += 1;
-            } else if c >= "1" && c <= "8" {
-                for _ in 0..c.parse().expect("should not happen") {
-                    rep[(LAST_RANK - rank) * NUM_FILES + file] = NO_PIECE;
+            if file > LAST_FILE && c != "/" && c != " " {
+                panic!("invalid piece placement file");
+            }
+            let mut examine_c = true;
+            let sq: Square = (LAST_RANK - rank) * NUM_FILES + file;
+            if c == "l" {
+                lancer_color = BLACK;
+                lancer_index = 1;
+            } else if c == "L" {
+                lancer_color = WHITE;
+                lancer_index = 1;
+            } else if lancer_index == 1 {
+                if c == "n" {
+                    lancer_has_north = true;
+                    lancer_index = 2;
+                } else if c == "s" {
+                    lancer_has_north = false;
+                    lancer_index = 2;
+                } else if c == "e" {
+                    rep[sq] = color_figure(lancer_color, LANCERE);
                     file += 1;
+                    lancer_index = 0;
+                    examine_c = false;
+                } else if c == "w" {
+                    rep[sq] = color_figure(lancer_color, LANCERW);
+                    file += 1;
+                    lancer_index = 0;
+                    examine_c = false;
+                } else {
+                    panic!("invalid lancer")
                 }
-            } else {
-                let p = fen_symbol_to_piece(c);
-                if p != NO_PIECE {
-                    rep[(LAST_RANK - rank) * NUM_FILES + file] = p;
-                    file += 1;
+            } else if lancer_index == 2 {
+                if c == "e" {
+                    if lancer_has_north {
+                        rep[sq] = color_figure(lancer_color, LANCERNE);
+                        file += 1;
+                        lancer_index = 0;
+                        examine_c = false;
+                    } else {
+                        rep[sq] = color_figure(lancer_color, LANCERSE);
+                        file += 1;
+                        lancer_index = 0;
+                        examine_c = false;
+                    }
+                } else if c == "w" {
+                    if lancer_has_north {
+                        rep[sq] = color_figure(lancer_color, LANCERNW);
+                        file += 1;
+                        lancer_index = 0;
+                        examine_c = false;
+                    } else {
+                        rep[sq] = color_figure(lancer_color, LANCERSW);
+                        file += 1;
+                        lancer_index = 0;
+                        examine_c = false;
+                    }
+                } else {
+                    if lancer_has_north {
+                        rep[sq] = color_figure(lancer_color, LANCERN);
+                        file += 1;
+                        lancer_index = 0;
+                    } else {
+                        rep[sq] = color_figure(lancer_color, LANCERS);
+                        file += 1;
+                        lancer_index = 0;
+                    }
+                }
+            }
+            if lancer_index == 0 && examine_c {
+                if c == " " {
+                    return rep;
+                } else if c == "/" {
+                    file = 0;
+                    rank += 1;
+                } else if c >= "1" && c <= "8" {
+                    for _ in 0..c.parse().expect("should not happen") {
+                        if file > LAST_FILE {
+                            panic!("invalid piece placement file");
+                        }
+                        rep[(LAST_RANK - rank) * NUM_FILES + file] = NO_PIECE;
+                        file += 1;
+                    }
+                } else {
+                    let p = fen_symbol_to_piece(c);
+                    if p != NO_PIECE {
+                        rep[sq] = p;
+                        file += 1;
+                    } else {
+                        panic!("invalid fen symbol")
+                    }
                 }
             }
         }

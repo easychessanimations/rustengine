@@ -19,7 +19,7 @@ pub const VARIANT_EIGHTPIECE: Variant = 1;
 pub const VARIANT_ATOMIC: Variant = 2;
 
 /// DEFAULT_VARIANT tells the default variant
-pub const DEFAULT_VARIANT: Variant = VARIANT_STANDARD;
+pub const DEFAULT_VARIANT: Variant = VARIANT_EIGHTPIECE;
 
 /// VARIANT_INFOS records information for all variants
 pub const VARIANT_INFOS: [VariantInfo; NUM_VARIANTS] = [
