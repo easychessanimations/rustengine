@@ -1,11 +1,44 @@
 use crate::bitboard::*;
 use crate::piece::*;
 use crate::square::*;
+use crate::state::*;
 
 /// BISHOP_MAGIC_UNITS tells the total number of bishop lookup table items
 pub const BISHOP_MAGIC_UNITS: usize = 18976;
 /// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
+
+/// NUM_VARIANTS tells the number of possible variants
+pub const NUM_VARIANTS: usize = 3;
+
+/// VARIANT_STANDARD is the index for Standard variant
+pub const VARIANT_STANDARD: Variant = 0;
+/// VARIANT_EIGHTPIECE is the index for Eightpiece variant
+pub const VARIANT_EIGHTPIECE: Variant = 1;
+/// VARIANT_ATOMIC is the index for Atomic variant
+pub const VARIANT_ATOMIC: Variant = 2;
+
+/// DEFAULT_VARIANT tells the default variant
+pub const DEFAULT_VARIANT: Variant = VARIANT_STANDARD;
+
+/// VARIANT_INFOS records information for all variants
+pub const VARIANT_INFOS: [VariantInfo; NUM_VARIANTS] = [
+    VariantInfo {
+        // standard
+        start_fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        display_name: "Standard",
+    },
+    VariantInfo {
+        // eightpiece
+        start_fen: "jlsesqkbnr/pppppppp/8/8/8/8/PPPPPPPP/JLneSQKBNR w KQkq - 0 1 -",
+        display_name: "Eightpiece",
+    },
+    VariantInfo {
+        // atomic
+        start_fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        display_name: "Atomic",
+    },
+];
 
 /// MAX_STATES tells the maximum number of states in a LinearGaeme
 pub const MAX_STATES: usize = 100;

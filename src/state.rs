@@ -6,8 +6,18 @@ use crate::square::*;
 /// State records the state of a chess game
 #[derive(Clone)]
 pub struct State {
+    variant: Variant,
     rep: [Piece; BOARD_AREA],
     by_color: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
+}
+
+/// Variant type records the index of the variant
+pub type Variant = usize;
+
+/// VariantInfo records variant information
+pub struct VariantInfo {
+    pub start_fen: &'static str,
+    pub display_name: &'static str,
 }
 
 /// State implementation
@@ -15,6 +25,7 @@ impl State {
     /// creates a new empty State
     pub fn new() -> State {
         State {
+            variant: DEFAULT_VARIANT,
             rep: EMPTY_REP,
             by_color: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
         }
@@ -43,6 +54,19 @@ impl State {
                 }
             }
         }
+        buff = format!(
+            "{}\nvariant start fen : {}\n",
+            buff,
+            self.variant_start_fen()
+        );
         buff
+    }
+
+    /// initialize from variant
+    pub fn init_variant(&self) {}
+
+    /// returns the start fen for the variant of the state
+    pub fn variant_start_fen(&self) -> &str {
+        VARIANT_INFOS[self.variant].start_fen
     }
 }
