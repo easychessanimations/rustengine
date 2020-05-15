@@ -1,7 +1,7 @@
 use rustenginelib::uci::*;
 
 fn main() {
-    let uci = create_default_uci();
+    let mut uci = create_default_uci();
 
     uci.welcome("native build");
 

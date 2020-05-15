@@ -6,8 +6,8 @@ use crate::state::*;
 
 /// LinearGame represents a single variantion chess game
 pub struct LinearGame {
-    states: Vec<State>,
-    state_ptr: usize,
+    pub states: Vec<State>,
+    pub state_ptr: usize,
 }
 
 /// LinearGame implementation
@@ -21,17 +21,23 @@ impl LinearGame {
     }
 
     /// current returns the current state of the game
-    pub fn current(&self) -> &State {
-        &self.states[self.state_ptr]
+    pub fn current(&mut self) -> &mut State {
+        &mut self.states[self.state_ptr]
     }
 
     /// returns the game as pretty printable string
-    pub fn pretty_print_string(&self) -> String {
+    pub fn pretty_print_string(&mut self) -> String {
         self.current().pretty_print_string()
     }
 
     /// prints the game
-    pub fn print(&self) {
+    pub fn print(&mut self) {
         println!("{}", self.pretty_print_string())
+    }
+
+    /// initializes game to variant
+    pub fn init(&mut self, variant: Variant) {
+        self.state_ptr = 0;
+        self.current().init(variant);
     }
 }

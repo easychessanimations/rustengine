@@ -14,11 +14,13 @@ pub struct Uci {
 }
 
 pub fn create_default_uci() -> Uci {
-    Uci {
+    let mut uci = Uci {
         engine_name: "rustengine".to_string(),
         engine_author: "easychessanimations".to_string(),
         linear_game: LinearGame::new(),
-    }
+    };
+    uci.linear_game.init(DEFAULT_VARIANT);
+    uci
 }
 
 pub fn demo() {
@@ -136,7 +138,7 @@ impl Uci {
         println!("uciok");
     }
 
-    pub fn process_uci_command(&self, line: String) -> bool {
+    pub fn process_uci_command(&mut self, line: String) -> bool {
         let parts: Vec<&str> = line.split(" ").collect();
 
         let command = parts[0];
@@ -178,7 +180,7 @@ impl Uci {
         );
     }
 
-    pub fn uci_loop(&self) {
+    pub fn uci_loop(&mut self) {
         let stdin = io::stdin();
 
         for line in stdin.lock().lines() {

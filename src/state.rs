@@ -8,6 +8,7 @@ use crate::square::*;
 pub struct State {
     variant: Variant,
     rep: [Piece; BOARD_AREA],
+    turn: Color,
     by_color: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
 }
 
@@ -132,9 +133,35 @@ impl State {
     pub fn new() -> State {
         State {
             variant: DEFAULT_VARIANT,
-            rep: State::parse_piece_placement(VARIANT_INFOS[DEFAULT_VARIANT].start_fen),
+            rep: EMPTY_REP,
+            turn: WHITE,
             by_color: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
         }
+    }
+
+    /// sets state from fen
+    pub fn set_from_fen(&mut self, fen: &str) {
+        let parts: Vec<&str> = fen.split(" ").collect();
+
+        let l = parts.len();
+
+        if l != 4 && l != 6 && l != 7 {
+            panic!("invalid number of fen fields {}", l);
+        }
+
+        self.rep = State::parse_piece_placement(parts[0]);
+
+        match parts[1] {
+            "w" => self.turn = WHITE,
+            "b" => self.turn = BLACK,
+            _ => panic!("invalid turn {}", parts[1]),
+        }
+    }
+
+    /// initializes state to variant
+    pub fn init(&mut self, variant: Variant) {
+        self.variant = variant;
+        self.set_from_fen(VARIANT_INFOS[self.variant].start_fen);
     }
 
     /// sets the piece at a square
