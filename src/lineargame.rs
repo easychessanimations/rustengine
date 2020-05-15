@@ -1,7 +1,7 @@
 //use crate::bitboard::*;
 use crate::constants::*;
 //use crate::piece::*;
-//use crate::square::*;
+use crate::square::*;
 use crate::state::*;
 
 /// LinearGame represents a single variantion chess game
@@ -39,5 +39,20 @@ impl LinearGame {
     pub fn init(&mut self, variant: Variant) {
         self.state_ptr = 0;
         self.current().init(variant);
+    }
+
+    /// pushes a move
+    pub fn push(&mut self, mv: Move) {
+        self.current().make_move(mv);
+    }
+
+    /// pushes a move by index in state move buff
+    pub fn push_by_index(&mut self, index: usize) -> bool {
+        if index < self.current().move_buff.len() {
+            let mv = self.current().move_buff[index].mv;
+            self.push(mv);
+            return true;
+        }
+        false
     }
 }

@@ -149,10 +149,12 @@ impl Uci {
 
         if command == "uci" {
             self.execute_uci_command();
+            return true;
         }
 
         if command == "i" {
             self.linear_game.print();
+            return true;
         }
 
         if command == "demo" {
@@ -168,10 +170,25 @@ impl Uci {
                 "space" => magic_space(),
                 _ => demo(),
             }
+
+            return true;
         }
 
         if command == "bb" {
             self.linear_game.current().print_bitboards();
+
+            return true;
+        }
+
+        match command.parse::<usize>() {
+            Ok(n) => {
+                if n > 0 {
+                    self.linear_game.push_by_index(n - 1);
+                    self.linear_game.print();
+                }
+                return true;
+            }
+            Err(_) => (),
         }
 
         true

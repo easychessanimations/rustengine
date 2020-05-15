@@ -3,6 +3,13 @@ use crate::constants::*;
 use crate::piece::*;
 use crate::square::*;
 
+/// MoveBuffItem stores a move with meta information
+#[derive(Clone)]
+pub struct MoveBuffItem {
+    pub mv: Move,
+    uci: String,
+}
+
 /// State records the state of a chess game
 #[derive(Clone)]
 pub struct State {
@@ -18,6 +25,7 @@ pub struct State {
     by_figure: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
     by_color: [Bitboard; 2],
     castling_rights: [ColorCastlingRights; 2],
+    pub move_buff: Vec<MoveBuffItem>,
 }
 
 /// CastlingRight represents a castling right
@@ -182,6 +190,7 @@ impl State {
             by_figure: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
             by_color: [0, 0],
             castling_rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
+            move_buff: Vec::new(),
         }
     }
 
@@ -408,7 +417,7 @@ impl State {
                 gen_mode,
                 self.by_color[col],
                 self.by_color[col.inverse()],
-                LANCER_ATTACKS[sq][fig.lancer_direction()],
+                LANCER_ATTACKS[fig.lancer_direction()][sq],
             ),
             KING => king_mobility(
                 sq,
@@ -480,7 +489,7 @@ impl State {
     }
 
     /// returns the state as pretty printable string
-    pub fn pretty_print_string(&self) -> String {
+    pub fn pretty_print_string(&mut self) -> String {
         let mut buff = "".to_string();
         for rank in 0..NUM_RANKS {
             for file in 0..NUM_FILES {
@@ -498,17 +507,30 @@ impl State {
             self.variant.string(),
             self.report_fen()
         );
+        format!("{}\n{}\n", buff, self.gen_move_buff())
+    }
+
+    /// generates moves with meta information
+    pub fn gen_move_buff(&mut self) -> String {
         let moves = self.generate_pseudo_legal_moves_for_color(MoveGenMode::All, self.turn);
         let mut move_buff = "".to_string();
+        self.move_buff = Vec::new();
         for i in 0..moves.len() {
-            let move_str = format!("{}. {}", i + 1, moves[i].uci());
-            if move_buff == "" {
-                move_buff = move_str;
-            } else {
-                move_buff = format!("{} , {}", move_buff, move_str);
+            let mv = moves[i];
+            self.move_buff.push(MoveBuffItem {
+                mv: mv,
+                uci: mv.uci(),
+            });
+        }
+        self.move_buff.sort_by(|a, b| a.uci.cmp(&b.uci));
+        for i in 0..self.move_buff.len() {
+            let move_str = format!("{}. {}", i + 1, self.move_buff[i].uci);
+            move_buff = format!("{}{:16}", move_buff, move_str);
+            if i % 6 == 5 {
+                move_buff = format!("{}\n", move_buff);
             }
         }
-        format!("{}\nmoves : {}\n", buff, move_buff)
+        move_buff
     }
 
     /// initialize from variant
@@ -517,5 +539,17 @@ impl State {
     /// returns the start fen for the variant of the state
     pub fn variant_start_fen(&self) -> &str {
         VARIANT_INFOS[self.variant].start_fen
+    }
+
+    /// makes a move
+    pub fn make_move(&mut self, mv: Move) {
+        let from_sq = mv.from_sq();
+        let to_sq = mv.to_sq();
+        let fromp: Piece = self.piece_at_square(from_sq);
+        //let top: Piece = self.piece_at_square(to_sq);
+        self.remove(from_sq);
+        self.put(to_sq, fromp);
+
+        self.turn = self.turn.inverse();
     }
 }
