@@ -65,4 +65,20 @@ impl LinearGame {
         }
         false
     }
+
+    pub fn perft_rec(&mut self, depth: usize) {
+        if depth == 0 {
+            return;
+        }
+        let moves = self.current().generate_pseudo_legal_moves(MoveGenMode::All);
+        for mv in moves.iter() {
+            self.push(*mv);
+            self.perft_rec(depth - 1);
+            self.pop();
+        }
+    }
+
+    pub fn perft(&mut self, depth: usize) {
+    	self.perft_rec(depth);
+    }
 }

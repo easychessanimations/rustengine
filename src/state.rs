@@ -33,7 +33,7 @@ pub struct CastlingRigths {
 pub struct State {
     variant: Variant,
     rep: [Piece; BOARD_AREA],
-    turn: Color,
+    pub turn: Color,
     ep_square: Square,
     halfmove_clock: usize,
     fullmove_number: usize,
@@ -439,6 +439,11 @@ impl State {
         }
     }
 
+    /// generates pseudo legal moves for turn
+    pub fn generate_pseudo_legal_moves(&mut self, gen_mode: MoveGenMode) -> Vec<Move> {
+        self.generate_pseudo_legal_moves_for_color(gen_mode, self.turn)
+    }
+
     /// generates pseudo legal moves for color
     pub fn generate_pseudo_legal_moves_for_color(
         &self,
@@ -534,7 +539,12 @@ impl State {
         }
         self.move_buff.sort_by(|a, b| a.uci.cmp(&b.uci));
         for i in 0..self.move_buff.len() {
-            let move_str = format!("{}. {}", i + 1, self.move_buff[i].uci);
+            let fromp = self.piece_at_square(self.move_buff[i].mv.from_sq());
+            let mut san_letter = fromp.san_letter();
+            if fromp.figure() == PAWN {
+                san_letter = "";
+            }
+            let move_str = format!("{}. {}{}", i + 1, san_letter, self.move_buff[i].uci);
             move_buff = format!("{}{:16}", move_buff, move_str);
             if i % 6 == 5 {
                 move_buff = format!("{}\n", move_buff);
