@@ -4,10 +4,13 @@ use crate::constants::*;
 use crate::square::*;
 use crate::state::*;
 
+use std::time::Instant;
+
 /// LinearGame represents a single variantion chess game
 pub struct LinearGame {
     pub states: Vec<State>,
     pub state_ptr: usize,
+    pub nodes: usize,
 }
 
 /// LinearGame implementation
@@ -17,6 +20,7 @@ impl LinearGame {
         LinearGame {
             states: vec![State::new(); MAX_STATES],
             state_ptr: 0,
+            nodes: 0,
         }
     }
 
@@ -67,6 +71,7 @@ impl LinearGame {
     }
 
     pub fn perft_rec(&mut self, depth: usize) {
+        self.nodes += 1;
         if depth == 0 {
             return;
         }
@@ -79,6 +84,16 @@ impl LinearGame {
     }
 
     pub fn perft(&mut self, depth: usize) {
-    	self.perft_rec(depth);
+        self.nodes = 0;
+        let start = Instant::now();
+        self.perft_rec(depth);
+        let duration = start.elapsed();
+        let secs = ((duration.as_secs() as f32) * 1e9 + (duration.subsec_nanos() as f32)) / 1e9;
+        println!(
+            "node(s) {:?} , time {:.2} sec(s) , nps {} kNode(s)/sec",
+            self.nodes,
+            secs,
+            (self.nodes as f32) / secs / 1000.0
+        );
     }
 }

@@ -161,7 +161,7 @@ impl Uci {
             let mut arg = "";
 
             if parts.len() > 0 {
-                arg = parts[0];
+                arg = parts[1];
             }
 
             match arg {
@@ -172,6 +172,11 @@ impl Uci {
             }
 
             return true;
+        }
+
+        if command == "perft" {
+            self.linear_game
+                .perft(parts[1].parse().expect("illegal perft depth"));
         }
 
         if command == "bb" {
