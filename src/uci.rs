@@ -180,6 +180,11 @@ impl Uci {
             return true;
         }
 
+        if command == "d" {
+            self.linear_game.pop();
+            self.linear_game.print();
+        }
+
         match command.parse::<usize>() {
             Ok(n) => {
                 if n > 0 {

@@ -10,6 +10,24 @@ pub struct MoveBuffItem {
     uci: String,
 }
 
+/// CastlingRight represents a castling right
+#[derive(Copy, Clone)]
+pub struct CastlingRight {
+    pub can_castle: bool,
+}
+
+/// ColorCastlingRights represents castling rights for a color
+#[derive(Copy, Clone)]
+pub struct ColorCastlingRights {
+    pub rights: [CastlingRight; 2],
+}
+
+/// CastlingRights represents all castling rights
+#[derive(Copy, Clone)]
+pub struct CastlingRigths {
+    rights: [ColorCastlingRights; 2],
+}
+
 /// State records the state of a chess game
 #[derive(Clone)]
 pub struct State {
@@ -24,20 +42,8 @@ pub struct State {
     disable_to_sq: Square,
     by_figure: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
     by_color: [Bitboard; 2],
-    castling_rights: [ColorCastlingRights; 2],
+    castling_rights: CastlingRigths,
     pub move_buff: Vec<MoveBuffItem>,
-}
-
-/// CastlingRight represents a castling right
-#[derive(Clone)]
-pub struct CastlingRight {
-    pub can_castle: bool,
-}
-
-/// ColorCastlingRights represents castling rights for a color
-#[derive(Clone)]
-pub struct ColorCastlingRights {
-    pub rights: [CastlingRight; 2],
 }
 
 /// Variant type records the index of the variant
@@ -189,7 +195,9 @@ impl State {
             disable_to_sq: SQUARE_A1,
             by_figure: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
             by_color: [0, 0],
-            castling_rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
+            castling_rights: CastlingRigths {
+                rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
+            },
             move_buff: Vec::new(),
         }
     }
@@ -212,7 +220,9 @@ impl State {
             _ => panic!("invalid turn {}", parts[1]),
         }
 
-        self.castling_rights = [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS];
+        self.castling_rights = CastlingRigths {
+            rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
+        };
 
         if parts[2] == "-" {
             // no castling rights
@@ -220,10 +230,10 @@ impl State {
             for i in 0..parts[2].len() {
                 let r = &parts[2][i..i + 1];
                 match r {
-                    "K" => self.castling_rights[WHITE].rights[KING_SIDE].can_castle = true,
-                    "Q" => self.castling_rights[WHITE].rights[QUEEN_SIDE].can_castle = true,
-                    "k" => self.castling_rights[BLACK].rights[KING_SIDE].can_castle = true,
-                    "q" => self.castling_rights[BLACK].rights[QUEEN_SIDE].can_castle = true,
+                    "K" => self.castling_rights.rights[WHITE].rights[KING_SIDE].can_castle = true,
+                    "Q" => self.castling_rights.rights[WHITE].rights[QUEEN_SIDE].can_castle = true,
+                    "k" => self.castling_rights.rights[BLACK].rights[KING_SIDE].can_castle = true,
+                    "q" => self.castling_rights.rights[BLACK].rights[QUEEN_SIDE].can_castle = true,
                     _ => panic!("invalid castling right {}", r),
                 }
             }
@@ -320,16 +330,16 @@ impl State {
         }
         buff = format!("{} {}", buff, self.turn.turn_fen());
         let mut cfen = "".to_string();
-        if self.castling_rights[WHITE].rights[KING_SIDE].can_castle {
+        if self.castling_rights.rights[WHITE].rights[KING_SIDE].can_castle {
             cfen = format!("{}{}", cfen, "K")
         }
-        if self.castling_rights[WHITE].rights[QUEEN_SIDE].can_castle {
+        if self.castling_rights.rights[WHITE].rights[QUEEN_SIDE].can_castle {
             cfen = format!("{}{}", cfen, "Q")
         }
-        if self.castling_rights[BLACK].rights[KING_SIDE].can_castle {
+        if self.castling_rights.rights[BLACK].rights[KING_SIDE].can_castle {
             cfen = format!("{}{}", cfen, "k")
         }
-        if self.castling_rights[BLACK].rights[QUEEN_SIDE].can_castle {
+        if self.castling_rights.rights[BLACK].rights[QUEEN_SIDE].can_castle {
             cfen = format!("{}{}", cfen, "q")
         }
         if cfen == "" {

@@ -43,7 +43,17 @@ impl LinearGame {
 
     /// pushes a move
     pub fn push(&mut self, mv: Move) {
+        self.state_ptr += 1;
+        self.states[self.state_ptr] = self.states[self.state_ptr - 1].clone();
         self.current().make_move(mv);
+    }
+
+    /// pops a state
+    pub fn pop(&mut self) {
+        if self.state_ptr <= 0 {
+            return;
+        }
+        self.state_ptr -= 1;
     }
 
     /// pushes a move by index in state move buff
