@@ -11,6 +11,9 @@ pub const ROOK_MAGIC_UNITS: usize = 387072;
 /// NUM_LANCERS tells the number of possible lancer direction variations
 pub const NUM_LANCERS: usize = 8;
 
+/// PAWN_START_RANKS tells the pawn start rank for color
+pub const PAWN_START_RANKS: [Rank; 2] = [RANK_7, RANK_2];
+
 /// LANCER_DELTAS lists lancer deltas by direction
 pub const LANCER_DELTAS: [Delta; NUM_LANCERS] = [
     Delta::N,

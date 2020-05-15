@@ -16,6 +16,13 @@ pub type File = usize;
 /// Square type represents a square of a chess board as an unsigned int
 pub type Square = usize;
 
+/// PawnInfo struct records the possible move and ep related squares of pawns
+#[derive(Clone)]
+pub struct PawnInfo {
+    pub pushes: Vec<Square>,
+    pub captures: Vec<Square>,
+}
+
 /// Move type represents a chess move
 pub type Move = u32;
 
@@ -359,6 +366,44 @@ pub fn sliding_attack<T: DeltaBuffer>(sq: Square, deltas: &T, occup: Bitboard) -
 
 /// AttackTable type records an attack bitboard for every square of a chess board
 pub type AttackTable = [Bitboard; BOARD_AREA];
+
+/// PAWN_INFOS records PawnInfo for color and square
+pub static PAWN_INFOS: Lazy<Vec<Vec<PawnInfo>>> = Lazy::new(|| {
+    let mut cpis: Vec<Vec<PawnInfo>> = Vec::new();
+    for col in BLACK..WHITE + 1 {
+        let mut spis: Vec<PawnInfo> = Vec::new();
+        for sq in 0..BOARD_AREA {
+            let mut pi: PawnInfo = PawnInfo {
+                pushes: Vec::new(),
+                captures: Vec::new(),
+            };
+            let push_delta: &Delta = if col == WHITE { &Delta::N } else { &Delta::S };
+            let (push_one_sq, ok) = sq.add_delta(push_delta);
+            if ok {
+                pi.pushes.push(push_one_sq);
+                let (capt_left_sq, ok) = push_one_sq.add_delta(&Delta::W);
+                if ok {
+                    pi.captures.push(capt_left_sq);
+                }
+                let (capt_right_sq, ok) = push_one_sq.add_delta(&Delta::E);
+                if ok {
+                    pi.captures.push(capt_right_sq);
+                }
+                if sq.rank() == PAWN_START_RANKS[col] {
+                    let (push_two_sq, ok) = push_one_sq.add_delta(push_delta);
+                    if ok {
+                        pi.pushes.push(push_two_sq);
+                    } else {
+                        panic!("illegal pawn start rank")
+                    }
+                }
+            }
+            spis.push(pi);
+        }
+        cpis.push(spis);
+    }
+    cpis
+});
 
 /// KNIGHT_ATTACK is the attack table of knight
 pub static KNIGHT_ATTACK: Lazy<AttackTable> = Lazy::new(|| {

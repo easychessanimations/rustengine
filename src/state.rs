@@ -434,7 +434,31 @@ impl State {
                 let p = self.piece_at_square(sq);
                 let fig = p.figure();
                 match fig {
-                    PAWN => {}
+                    PAWN => {
+                        let pi: &PawnInfo = &PAWN_INFOS[col][sq];
+                        let mut do_pawn_moves = |pushes, captures| {
+                            if pushes {
+                                for to_sq in pi.pushes.iter() {
+                                    if self.piece_at_square(*to_sq) == NO_PIECE {
+                                        moves.push(Move::ft(sq, *to_sq));
+                                    }
+                                }
+                            }
+                            if captures {
+                                for to_sq in pi.captures.iter() {
+                                    let cp: Piece = self.piece_at_square(*to_sq);
+                                    if cp != NO_PIECE && cp.color() == col.inverse() {
+                                        moves.push(Move::ft(sq, *to_sq));
+                                    }
+                                }
+                            }
+                        };
+                        match gen_mode {
+                            MoveGenMode::Violent => do_pawn_moves(false, true),
+                            MoveGenMode::Quiet => do_pawn_moves(true, false),
+                            MoveGenMode::All => do_pawn_moves(true, true),
+                        }
+                    }
                     _ => {
                         let mut mob =
                             self.color_figure_mobility_at_square(sq, gen_mode, col, p.figure());
