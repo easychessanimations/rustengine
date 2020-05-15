@@ -170,6 +170,10 @@ impl Uci {
             }
         }
 
+        if command == "bb" {
+            self.linear_game.current().print_bitboards();
+        }
+
         true
     }
 

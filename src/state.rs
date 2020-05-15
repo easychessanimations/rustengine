@@ -61,8 +61,8 @@ pub struct VariantInfo {
 /// State implementation
 impl State {
     /// parses piece placement
-    pub fn parse_piece_placement(fen: &str) -> [Piece; BOARD_AREA] {
-        let mut rep = EMPTY_REP;
+    pub fn parse_piece_placement(&mut self, fen: &str) {
+        self.by_color = [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS];
         let mut rank: Rank = 0;
         let mut file: File = 0;
         let mut lancer_color = 0;
@@ -89,12 +89,12 @@ impl State {
                     lancer_has_north = false;
                     lancer_index = 2;
                 } else if c == "e" {
-                    rep[sq] = color_figure(lancer_color, LANCERE);
+                    self.put(sq, color_figure(lancer_color, LANCERE));
                     file += 1;
                     lancer_index = 0;
                     examine_c = false;
                 } else if c == "w" {
-                    rep[sq] = color_figure(lancer_color, LANCERW);
+                    self.put(sq, color_figure(lancer_color, LANCERW));
                     file += 1;
                     lancer_index = 0;
                     examine_c = false;
@@ -104,35 +104,35 @@ impl State {
             } else if lancer_index == 2 {
                 if c == "e" {
                     if lancer_has_north {
-                        rep[sq] = color_figure(lancer_color, LANCERNE);
+                        self.put(sq, color_figure(lancer_color, LANCERNE));
                         file += 1;
                         lancer_index = 0;
                         examine_c = false;
                     } else {
-                        rep[sq] = color_figure(lancer_color, LANCERSE);
+                        self.put(sq, color_figure(lancer_color, LANCERSE));
                         file += 1;
                         lancer_index = 0;
                         examine_c = false;
                     }
                 } else if c == "w" {
                     if lancer_has_north {
-                        rep[sq] = color_figure(lancer_color, LANCERNW);
+                        self.put(sq, color_figure(lancer_color, LANCERNW));
                         file += 1;
                         lancer_index = 0;
                         examine_c = false;
                     } else {
-                        rep[sq] = color_figure(lancer_color, LANCERSW);
+                        self.put(sq, color_figure(lancer_color, LANCERSW));
                         file += 1;
                         lancer_index = 0;
                         examine_c = false;
                     }
                 } else {
                     if lancer_has_north {
-                        rep[sq] = color_figure(lancer_color, LANCERN);
+                        self.put(sq, color_figure(lancer_color, LANCERN));
                         file += 1;
                         lancer_index = 0;
                     } else {
-                        rep[sq] = color_figure(lancer_color, LANCERS);
+                        self.put(sq, color_figure(lancer_color, LANCERS));
                         file += 1;
                         lancer_index = 0;
                     }
@@ -140,7 +140,7 @@ impl State {
             }
             if lancer_index == 0 && examine_c {
                 if c == " " {
-                    return rep;
+                    return;
                 } else if c == "/" {
                     file = 0;
                     rank += 1;
@@ -149,13 +149,13 @@ impl State {
                         if file > LAST_FILE {
                             panic!("invalid piece placement file");
                         }
-                        rep[(LAST_RANK - rank) * NUM_FILES + file] = NO_PIECE;
+                        self.remove((LAST_RANK - rank) * NUM_FILES + file);
                         file += 1;
                     }
                 } else {
                     let p = fen_symbol_to_piece(c);
                     if p != NO_PIECE {
-                        rep[sq] = p;
+                        self.put(sq, p);
                         file += 1;
                     } else {
                         panic!("invalid fen symbol")
@@ -163,7 +163,6 @@ impl State {
                 }
             }
         }
-        rep
     }
 
     /// creates a new empty State
@@ -193,7 +192,7 @@ impl State {
             panic!("invalid number of fen fields {}", l);
         }
 
-        self.rep = State::parse_piece_placement(parts[0]);
+        self.parse_piece_placement(parts[0]);
 
         match parts[1] {
             "w" => self.turn = WHITE,
@@ -249,15 +248,29 @@ impl State {
         }
     }
 
+    // puts a piece on a square
+    pub fn put(&mut self, sq: Square, p: Piece) {
+        if p == NO_PIECE {
+            return;
+        }
+        self.rep[sq] = p;
+        self.by_color[p.color()][p.figure()] |= sq.bitboard();
+    }
+
+    // removes the piece from a square
+    pub fn remove(&mut self, sq: Square) {
+        let p = self.piece_at_square(sq);
+        if p == NO_PIECE {
+            return;
+        }
+        self.rep[sq] = NO_PIECE;
+        self.by_color[p.color()][p.figure()] &= !sq.bitboard();
+    }
+
     /// initializes state to variant
     pub fn init(&mut self, variant: Variant) {
         self.variant = variant;
         self.set_from_fen(VARIANT_INFOS[self.variant].start_fen);
-    }
-
-    /// sets the piece at a square
-    pub fn set_piece_at_square(&mut self, sq: Square, p: Piece) {
-        self.rep[sq] = p;
     }
 
     /// returns the piece at a square
@@ -324,6 +337,20 @@ impl State {
         buff
     }
 
+    /// prints bitboards
+    pub fn print_bitboards(&self) {
+        for col in BLACK..WHITE + 1 {
+            for fig in FIG_MIN..FIG_MAX {
+                println!(
+                    "{} {} {}",
+                    col.turn_fen(),
+                    fig.symbol(),
+                    self.by_color[col][fig].pretty_print_string()
+                );
+            }
+        }
+    }
+
     /// returns the state as pretty printable string
     pub fn pretty_print_string(&self) -> String {
         let mut buff = "".to_string();
@@ -338,7 +365,7 @@ impl State {
             }
         }
         buff = format!(
-            "{}\n\nvariant {} fen {}\n",
+            "{}\nvariant {} fen {}\n",
             buff,
             self.variant.string(),
             self.report_fen()

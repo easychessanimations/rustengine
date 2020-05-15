@@ -140,6 +140,11 @@ pub const SENTRY: Figure = 16;
 /// JAILER represents chess figure 'jailer'
 pub const JAILER: Figure = 17;
 
+/// FIG_MIN tells the lowest non empty figure
+pub const FIG_MIN: Figure = PAWN;
+/// FIG_MAX tells the highest non empty figure
+pub const FIG_MAX: Figure = JAILER;
+
 /// FIGURE_FEN_SYMBOLS maps a figure to its fen symbol
 pub const FIGURE_FEN_SYMBOLS: [&str; 18] = [
     ".", "p", "n", "b", "r", "q", "k", "l", "ln", "lne", "le", "lse", "ls", "lsw", "lw", "lnw",

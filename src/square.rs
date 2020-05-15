@@ -680,3 +680,37 @@ pub fn queen_mobility(
     bishop_mobility(gen_mode, sq, occup_us, occup_them)
         | rook_mobility(gen_mode, sq, occup_us, occup_them)
 }
+
+/// returns jump mobility
+pub fn get_jump_mobility(
+    gen_mode: MoveGenMode,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+    attack: Bitboard,
+) -> Bitboard {
+    match gen_mode {
+        MoveGenMode::All => attack & !occup_us,
+        MoveGenMode::Violent => attack & occup_them,
+        MoveGenMode::Quiet => attack & !(occup_us | occup_them),
+    }
+}
+
+/// returns knight mobility
+pub fn knight_mobility(
+    sq: Square,
+    gen_mode: MoveGenMode,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
+    get_jump_mobility(gen_mode, occup_us, occup_them, KNIGHT_ATTACK[sq])
+}
+
+/// returns king mobility
+pub fn king_mobility(
+    sq: Square,
+    gen_mode: MoveGenMode,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
+    get_jump_mobility(gen_mode, occup_us, occup_them, KING_ATTACK[sq])
+}
