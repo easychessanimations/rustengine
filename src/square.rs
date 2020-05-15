@@ -75,6 +75,8 @@ pub fn rank_file(rank: Rank, file: File) -> Square {
 
 /// Square trait adds methods to a Square
 pub trait SquareTrait {
+    /// creates Square from uci
+    fn from_uci(uci: String) -> (Square, bool);
     /// returns the rank of the square
     fn rank(self) -> Rank;
     /// returns the file of the square
@@ -92,6 +94,35 @@ pub trait SquareTrait {
 
 /// SquareTrait adds methods to a Square
 impl SquareTrait for Square {
+    /// creates Square from uci    
+    fn from_uci(uci: String) -> (Square, bool) {
+        if uci.len() != 2 {
+            return (SQUARE_A1, false);
+        }
+        let file = match &uci[0..1] {
+            "a" => 0,
+            "b" => 1,
+            "c" => 2,
+            "d" => 3,
+            "e" => 4,
+            "f" => 5,
+            "g" => 6,
+            "h" => 7,
+            _ => panic!("invalid file {:?}", &uci[0..1]),
+        };
+        let rank = match &uci[1..2] {
+            "1" => 0,
+            "2" => 1,
+            "3" => 2,
+            "4" => 3,
+            "5" => 4,
+            "6" => 5,
+            "7" => 6,
+            "8" => 7,
+            _ => panic!("invalid rank {:?}", &uci[1..2]),
+        };
+        (rank * NUM_FILES + file, true)
+    }
     /// returns the rank of the square
     fn rank(self) -> Rank {
         self >> RANK_SHIFT

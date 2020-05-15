@@ -19,6 +19,19 @@ impl FigureTrait for Figure {
 /// Color type represents a chess color
 pub type Color = usize;
 
+/// ColorTrait defines methods for Color
+pub trait ColorTrait {
+    /// returns the color fen string
+    fn turn_fen(self) -> String;
+}
+
+/// ColorTrait implementation
+impl ColorTrait for Color {
+    fn turn_fen(self) -> String {
+        (if self == WHITE { "w" } else { "b" }).to_string()
+    }
+}
+
 /// Piece type represents a chess piece as an unsigned int
 pub type Piece = usize;
 

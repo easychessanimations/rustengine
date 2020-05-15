@@ -8,6 +8,19 @@ pub const BISHOP_MAGIC_UNITS: usize = 18976;
 /// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
 
+/// EMPTY_CASTLING_RIGHT represents an empty castling right
+pub const EMPTY_CASTLING_RIGHT: CastlingRight = CastlingRight { can_castle: false };
+
+/// EMPTY_COLOR_CASTLING_RIGHTS represents empty castling rights for a color
+pub const EMPTY_COLOR_CASTLING_RIGHTS: ColorCastlingRights = ColorCastlingRights {
+    rights: [EMPTY_CASTLING_RIGHT, EMPTY_CASTLING_RIGHT],
+};
+
+/// KING_SIDE is the index for king side castling right
+pub const KING_SIDE: usize = 0;
+/// QUEEN_SIDE is the index for queen side castling right
+pub const QUEEN_SIDE: usize = 1;
+
 /// NUM_VARIANTS tells the number of possible variants
 pub const NUM_VARIANTS: usize = 3;
 

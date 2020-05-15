@@ -9,11 +9,48 @@ pub struct State {
     variant: Variant,
     rep: [Piece; BOARD_AREA],
     turn: Color,
+    ep_square: Square,
+    halfmove_clock: usize,
+    fullmove_number: usize,
+    has_disabled_move: bool,
+    disable_from_sq: Square,
+    disable_to_sq: Square,
     by_color: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
+    castling_rights: [ColorCastlingRights; 2],
+}
+
+/// CastlingRight represents a castling right
+#[derive(Clone)]
+pub struct CastlingRight {
+    pub can_castle: bool,
+}
+
+/// ColorCastlingRights represents castling rights for a color
+#[derive(Clone)]
+pub struct ColorCastlingRights {
+    pub rights: [CastlingRight; 2],
 }
 
 /// Variant type records the index of the variant
 pub type Variant = usize;
+
+trait VariantTrait {
+    /// returns name of variant
+    fn string(self) -> String;
+}
+
+impl VariantTrait for Variant {
+    /// returns name of variant
+    fn string(self) -> String {
+        let name = match self {
+            VARIANT_STANDARD => "Standard",
+            VARIANT_EIGHTPIECE => "Eightpiece",
+            VARIANT_ATOMIC => "Atomic",
+            _ => "Unknownvariant",
+        };
+        name.to_string()
+    }
+}
 
 /// VariantInfo records variant information
 pub struct VariantInfo {
@@ -135,7 +172,14 @@ impl State {
             variant: DEFAULT_VARIANT,
             rep: EMPTY_REP,
             turn: WHITE,
+            ep_square: SQUARE_A1,
+            halfmove_clock: 0,
+            fullmove_number: 1,
+            has_disabled_move: false,
+            disable_from_sq: SQUARE_A1,
+            disable_to_sq: SQUARE_A1,
             by_color: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
+            castling_rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
         }
     }
 
@@ -156,6 +200,53 @@ impl State {
             "b" => self.turn = BLACK,
             _ => panic!("invalid turn {}", parts[1]),
         }
+
+        self.castling_rights = [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS];
+
+        if parts[2] == "-" {
+            // no castling rights
+        } else {
+            for i in 0..parts[2].len() {
+                let r = &parts[2][i..i + 1];
+                match r {
+                    "K" => self.castling_rights[WHITE].rights[KING_SIDE].can_castle = true,
+                    "Q" => self.castling_rights[WHITE].rights[QUEEN_SIDE].can_castle = true,
+                    "k" => self.castling_rights[BLACK].rights[KING_SIDE].can_castle = true,
+                    "q" => self.castling_rights[BLACK].rights[QUEEN_SIDE].can_castle = true,
+                    _ => panic!("invalid castling right {}", r),
+                }
+            }
+        }
+
+        self.ep_square = SQUARE_A1;
+
+        if parts[3] != "-" {
+            self.ep_square = Square::from_uci(parts[3].to_string()).0;
+        }
+
+        self.halfmove_clock = parts[4].parse().expect("invalid halfmove clock");
+        self.fullmove_number = parts[5].parse().expect("invalid fullmove number");
+
+        self.has_disabled_move = false;
+
+        if self.variant == VARIANT_EIGHTPIECE {
+            if parts.len() > 6 {
+                if parts[6] != "-" {
+                    if parts[6].len() != 4 {
+                        panic!("invalid disabled mvoe {:?}", parts[6]);
+                    }
+                    let df = Square::from_uci(parts[6][0..2].to_string());
+                    let dt = Square::from_uci(parts[6][2..4].to_string());
+                    if df.1 && dt.1 {
+                        self.disable_from_sq = df.0;
+                        self.disable_to_sq = dt.0;
+                    } else {
+                        panic!("invalid disabled move {}", parts[6]);
+                    }
+                    self.has_disabled_move = true;
+                }
+            }
+        }
     }
 
     /// initializes state to variant
@@ -174,6 +265,65 @@ impl State {
         self.rep[sq]
     }
 
+    /// reports the state as fen
+    pub fn report_fen(&self) -> String {
+        let mut buff = "".to_string();
+        let mut acc = 0;
+        for rank in 0..NUM_RANKS {
+            for file in 0..NUM_FILES {
+                let sq: Square = (LAST_RANK - rank) * NUM_FILES + file;
+                let p = self.piece_at_square(sq);
+                let mut should_flush = false;
+                if p == NO_PIECE {
+                    acc += 1;
+                } else {
+                    should_flush = true;
+                    buff = format!("{}{}", buff, p.fen_symbol());
+                }
+                if acc > 0 && (should_flush || file == LAST_FILE) {
+                    buff = format!("{}{}", buff, acc);
+                    acc = 0;
+                }
+                if file == LAST_FILE && rank < LAST_RANK {
+                    buff = format!("{}/", buff);
+                }
+            }
+        }
+        buff = format!("{} {}", buff, self.turn.turn_fen());
+        let mut cfen = "".to_string();
+        if self.castling_rights[WHITE].rights[KING_SIDE].can_castle {
+            cfen = format!("{}{}", cfen, "K")
+        }
+        if self.castling_rights[WHITE].rights[QUEEN_SIDE].can_castle {
+            cfen = format!("{}{}", cfen, "Q")
+        }
+        if self.castling_rights[BLACK].rights[KING_SIDE].can_castle {
+            cfen = format!("{}{}", cfen, "k")
+        }
+        if self.castling_rights[BLACK].rights[QUEEN_SIDE].can_castle {
+            cfen = format!("{}{}", cfen, "q")
+        }
+        if cfen == "" {
+            cfen = "-".to_string();
+        }
+        let mut epfen = "-".to_string();
+        if self.ep_square != SQUARE_A1 {
+            epfen = self.ep_square.uci();
+        }
+        buff = format!(
+            "{} {} {} {} {}",
+            buff, cfen, epfen, self.halfmove_clock, self.fullmove_number
+        );
+        if self.variant == VARIANT_EIGHTPIECE {
+            let mut dfen = "-".to_string();
+            if self.has_disabled_move {
+                dfen = format!("{}{}", self.disable_from_sq.uci(), self.disable_to_sq.uci());
+            }
+            buff = format!("{} {}", buff, dfen);
+        }
+        buff
+    }
+
     /// returns the state as pretty printable string
     pub fn pretty_print_string(&self) -> String {
         let mut buff = "".to_string();
@@ -188,9 +338,10 @@ impl State {
             }
         }
         buff = format!(
-            "{}\nvariant start fen : {}\n",
+            "{}\n\nvariant {} fen {}\n",
             buff,
-            self.variant_start_fen()
+            self.variant.string(),
+            self.report_fen()
         );
         buff
     }
