@@ -7,12 +7,27 @@ pub type Figure = usize;
 pub trait FigureTrait {
     /// returns the fen symbol for the figure ( lower case )
     fn symbol(self) -> &'static str;
+    /// returns the base figure of the figure, same as figure except for lancers, where it is LANCER
+    fn base_figure(self) -> Figure;
+    /// return the lancer direction of the figure provided that it is a lancer
+    fn lancer_direction(self) -> usize;
 }
 
 impl FigureTrait for Figure {
     /// returns the fen symbol for the figure ( lower case )
     fn symbol(self) -> &'static str {
         FIGURE_FEN_SYMBOLS[self]
+    }
+    /// returns the base figure of the figure, same as figure except for lancers, where it is LANCER
+    fn base_figure(self) -> Figure {
+        if self < LANCER_MIN || self > LANCER_MAX {
+            return self;
+        }
+        LANCER
+    }
+    /// return the lancer direction of the figure provided that it is a lancer
+    fn lancer_direction(self) -> usize {
+        self - LANCER_MIN
     }
 }
 

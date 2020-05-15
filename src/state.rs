@@ -366,7 +366,7 @@ impl State {
         col: Color,
         fig: Figure,
     ) -> Bitboard {
-        match fig {
+        match fig.base_figure() {
             KNIGHT => knight_mobility(
                 sq,
                 gen_mode,
@@ -379,7 +379,19 @@ impl State {
                 self.by_color[col],
                 self.by_color[col.inverse()],
             ),
+            SENTRY => bishop_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
             ROOK => rook_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            JAILER => jailer_mobility(
                 sq,
                 gen_mode,
                 self.by_color[col],
@@ -390,6 +402,13 @@ impl State {
                 gen_mode,
                 self.by_color[col],
                 self.by_color[col.inverse()],
+            ),
+            LANCER => lancer_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+                LANCER_ATTACKS[sq][fig.lancer_direction()],
             ),
             KING => king_mobility(
                 sq,

@@ -8,6 +8,21 @@ pub const BISHOP_MAGIC_UNITS: usize = 18976;
 /// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
 
+/// NUM_LANCERS tells the number of possible lancer direction variations
+pub const NUM_LANCERS: usize = 8;
+
+/// LANCER_DELTAS lists lancer deltas by direction
+pub const LANCER_DELTAS: [Delta; NUM_LANCERS] = [
+    Delta::N,
+    Delta::NE,
+    Delta::E,
+    Delta::SE,
+    Delta::S,
+    Delta::SW,
+    Delta::W,
+    Delta::NW,
+];
+
 /// SQUARE_SIZE_IN_BITS tells the number of bits used to represent a square
 pub const SQUARE_SIZE_IN_BITS: usize = 6;
 
@@ -150,6 +165,11 @@ pub const LANCERNW: Figure = 15;
 pub const SENTRY: Figure = 16;
 /// JAILER represents chess figure 'jailer'
 pub const JAILER: Figure = 17;
+
+/// LANCER_MIN tells the lowest lancer
+pub const LANCER_MIN: Figure = LANCERN;
+/// LANCER_MAX tells the highest lancer
+pub const LANCER_MAX: Figure = LANCERNW;
 
 /// FIG_MIN tells the lowest non empty figure
 pub const FIG_MIN: Figure = PAWN;

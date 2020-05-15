@@ -51,6 +51,7 @@ impl MoveTrait for Move {
 }
 
 /// Delta enum lists the possible deltas of chess pieces
+#[derive(Copy, Clone)]
 pub enum Delta {
     N,
     NE,
@@ -70,7 +71,7 @@ pub enum Delta {
     NNW,
 }
 
-/// DeltaBuffer trait adds methods to various size buffers that hold deltas
+/// DeltaBuffer trait adds methods to various size buffers that holds deltas
 pub trait DeltaBuffer {
     /// len tells the length of the delta buffer
     fn len(&self) -> usize;
@@ -78,7 +79,19 @@ pub trait DeltaBuffer {
     fn get(&self, i: usize) -> &Delta;
 }
 
-// DeltaBuffer trait adds methods to 4 buffer that hold deltas
+// DeltaBuffer trait adds methods to 1 buffer that holds deltas
+impl DeltaBuffer for [Delta; 1] {
+    /// len tells the length of the delta buffer
+    fn len(&self) -> usize {
+        1
+    }
+    /// get gets a delta by index from the delta buffer
+    fn get(&self, i: usize) -> &Delta {
+        return &self[i];
+    }
+}
+
+// DeltaBuffer trait adds methods to 4 buffer that holds deltas
 impl DeltaBuffer for [Delta; 4] {
     /// len tells the length of the delta buffer
     fn len(&self) -> usize {
@@ -90,7 +103,7 @@ impl DeltaBuffer for [Delta; 4] {
     }
 }
 
-// DeltaBuffer trait adds methods to 8 buffer that hold deltas
+// DeltaBuffer trait adds methods to 8 buffer that holds deltas
 impl DeltaBuffer for [Delta; 8] {
     /// len tells the length of the delta buffer
     fn len(&self) -> usize {
@@ -394,6 +407,25 @@ pub static QUEEN_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
         at[sq] = sliding_attack(sq, &QUEEN_DELTAS, 0);
     }
     at
+});
+/// LANCER_ATTACKS is are attack tables of lancers
+pub static LANCER_ATTACKS: Lazy<[AttackTable; NUM_LANCERS]> = Lazy::new(|| {
+    let mut ats: [AttackTable; NUM_LANCERS] = [
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+        EMPTY_ATTACK_TABLE,
+    ];
+    for ld in 0..NUM_LANCERS {
+        for sq in 0..BOARD_AREA {
+            ats[ld][sq] = sliding_attack(sq, &[LANCER_DELTAS[ld]], 0);
+        }
+    }
+    ats
 });
 /// KING_ATTACK is the attack table of king
 pub static KING_ATTACK: Lazy<AttackTable> = Lazy::new(|| {
@@ -704,6 +736,16 @@ pub fn rook_mobility(
     )
 }
 
+/// returns jailer mobility
+pub fn jailer_mobility(
+    sq: Square,
+    gen_mode: MoveGenMode,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+) -> Bitboard {
+    rook_mobility(sq, gen_mode, occup_us, occup_them) & (!occup_them)
+}
+
 /// returns queen mobility
 pub fn queen_mobility(
     sq: Square,
@@ -713,6 +755,17 @@ pub fn queen_mobility(
 ) -> Bitboard {
     bishop_mobility(sq, gen_mode, occup_us, occup_them)
         | rook_mobility(sq, gen_mode, occup_us, occup_them)
+}
+
+/// returns lancer mobility
+pub fn lancer_mobility(
+    sq: Square,
+    gen_mode: MoveGenMode,
+    occup_us: Bitboard,
+    occup_them: Bitboard,
+    lancer_mask: Bitboard,
+) -> Bitboard {
+    queen_mobility(sq, gen_mode, 0, occup_them) & lancer_mask & (!occup_us)
 }
 
 /// returns jump mobility
