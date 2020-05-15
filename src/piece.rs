@@ -23,12 +23,18 @@ pub type Color = usize;
 pub trait ColorTrait {
     /// returns the color fen string
     fn turn_fen(self) -> String;
+    /// returns inverse of color
+    fn inverse(self) -> Color;
 }
 
 /// ColorTrait implementation
 impl ColorTrait for Color {
     fn turn_fen(self) -> String {
         (if self == WHITE { "w" } else { "b" }).to_string()
+    }
+    /// returns inverse of color
+    fn inverse(self) -> Color {
+        WHITE - self
     }
 }
 

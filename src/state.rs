@@ -15,7 +15,8 @@ pub struct State {
     has_disabled_move: bool,
     disable_from_sq: Square,
     disable_to_sq: Square,
-    by_color: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
+    by_figure: [[Bitboard; FIGURE_ARRAY_SIZE]; 2],
+    by_color: [Bitboard; 2],
     castling_rights: [ColorCastlingRights; 2],
 }
 
@@ -62,7 +63,8 @@ pub struct VariantInfo {
 impl State {
     /// parses piece placement
     pub fn parse_piece_placement(&mut self, fen: &str) {
-        self.by_color = [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS];
+        self.by_figure = [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS];
+        self.by_color = [0, 0];
         let mut rank: Rank = 0;
         let mut file: File = 0;
         let mut lancer_color = 0;
@@ -177,7 +179,8 @@ impl State {
             has_disabled_move: false,
             disable_from_sq: SQUARE_A1,
             disable_to_sq: SQUARE_A1,
-            by_color: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
+            by_figure: [EMTPY_FIGURE_BITBOARDS, EMTPY_FIGURE_BITBOARDS],
+            by_color: [0, 0],
             castling_rights: [EMPTY_COLOR_CASTLING_RIGHTS, EMPTY_COLOR_CASTLING_RIGHTS],
         }
     }
@@ -254,7 +257,9 @@ impl State {
             return;
         }
         self.rep[sq] = p;
-        self.by_color[p.color()][p.figure()] |= sq.bitboard();
+        let bb = sq.bitboard();
+        self.by_figure[p.color()][p.figure()] |= bb;
+        self.by_color[p.color()] |= bb;
     }
 
     // removes the piece from a square
@@ -264,7 +269,9 @@ impl State {
             return;
         }
         self.rep[sq] = NO_PIECE;
-        self.by_color[p.color()][p.figure()] &= !sq.bitboard();
+        let bb = sq.bitboard();
+        self.by_figure[p.color()][p.figure()] &= !bb;
+        self.by_color[p.color()] &= !bb;
     }
 
     /// initializes state to variant
@@ -345,10 +352,88 @@ impl State {
                     "{} {} {}",
                     col.turn_fen(),
                     fig.symbol(),
-                    self.by_color[col][fig].pretty_print_string()
+                    self.by_figure[col][fig].pretty_print_string()
                 );
             }
         }
+    }
+
+    /// returns mobility of color figure at square
+    pub fn color_figure_mobility_at_square(
+        &self,
+        sq: Square,
+        gen_mode: MoveGenMode,
+        col: Color,
+        fig: Figure,
+    ) -> Bitboard {
+        match fig {
+            KNIGHT => knight_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            BISHOP => bishop_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            ROOK => rook_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            QUEEN => queen_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            KING => king_mobility(
+                sq,
+                gen_mode,
+                self.by_color[col],
+                self.by_color[col.inverse()],
+            ),
+            _ => 0,
+        }
+    }
+
+    /// generates pseudo legal moves for color
+    pub fn generate_pseudo_legal_moves_for_color(
+        &self,
+        gen_mode: MoveGenMode,
+        col: Color,
+    ) -> Vec<Move> {
+        let mut moves: Vec<Move> = vec![0; 0];
+        let mut bb = self.by_color[col];
+        loop {
+            let (sq, ok) = bb.pop_square();
+            if ok {
+                let p = self.piece_at_square(sq);
+                let fig = p.figure();
+                match fig {
+                    PAWN => {}
+                    _ => {
+                        let mut mob =
+                            self.color_figure_mobility_at_square(sq, gen_mode, col, p.figure());
+                        loop {
+                            let (to_sq, ok) = mob.pop_square();
+                            if ok {
+                                moves.push(Move::ft(sq, to_sq));
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+        moves
     }
 
     /// returns the state as pretty printable string
@@ -370,7 +455,17 @@ impl State {
             self.variant.string(),
             self.report_fen()
         );
-        buff
+        let moves = self.generate_pseudo_legal_moves_for_color(MoveGenMode::All, self.turn);
+        let mut move_buff = "".to_string();
+        for i in 0..moves.len() {
+            let move_str = format!("{}. {}", i + 1, moves[i].uci());
+            if move_buff == "" {
+                move_buff = move_str;
+            } else {
+                move_buff = format!("{} , {}", move_buff, move_str);
+            }
+        }
+        format!("{}\nmoves : {}\n", buff, move_buff)
     }
 
     /// initialize from variant

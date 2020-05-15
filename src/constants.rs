@@ -8,6 +8,17 @@ pub const BISHOP_MAGIC_UNITS: usize = 18976;
 /// ROOK_MAGIC_UNITS tells the total number of rook lookup table items
 pub const ROOK_MAGIC_UNITS: usize = 387072;
 
+/// SQUARE_SIZE_IN_BITS tells the number of bits used to represent a square
+pub const SQUARE_SIZE_IN_BITS: usize = 6;
+
+/// SQUARE_MASK can be used to mask the bits representing a square
+pub const SQUARE_MASK: u32 = (1 << SQUARE_SIZE_IN_BITS) - 1;
+
+/// FROM_SQ_SHIFT is the shift of from square in Move
+pub const FROM_SQ_SHIFT: usize = 0;
+/// TO_SQ_SHIFT is the shift of to square in Move
+pub const TO_SQ_SHIFT: usize = SQUARE_SIZE_IN_BITS;
+
 /// EMPTY_CASTLING_RIGHT represents an empty castling right
 pub const EMPTY_CASTLING_RIGHT: CastlingRight = CastlingRight { can_castle: false };
 

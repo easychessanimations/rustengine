@@ -100,8 +100,8 @@ pub fn mobility_demo() {
     println!(
         "{}",
         queen_mobility(
-            MoveGenMode::All,
             SQUARE_E4,
+            MoveGenMode::All,
             SQUARE_G6.bitboard() | SQUARE_C4.bitboard(),
             SQUARE_D5.bitboard() | SQUARE_E7.bitboard()
         )

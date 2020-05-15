@@ -16,6 +16,40 @@ pub type File = usize;
 /// Square type represents a square of a chess board as an unsigned int
 pub type Square = usize;
 
+/// Move type represents a chess move
+pub type Move = u32;
+
+/// MoveTrait adds methods to Move
+pub trait MoveTrait {
+    /// returns a move from from square and to square
+    fn ft(from_sq: Square, to_sq: Square) -> Move;
+    /// returns from square of move
+    fn from_sq(self) -> Square;
+    /// returns to square of move
+    fn to_sq(self) -> Square;
+    /// return uci representation of move
+    fn uci(self) -> String;
+}
+
+impl MoveTrait for Move {
+    /// returns a move from from square and to square
+    fn ft(from_sq: Square, to_sq: Square) -> Move {
+        ((from_sq << FROM_SQ_SHIFT) + (to_sq << TO_SQ_SHIFT)) as u32
+    }
+    /// returns from square of move
+    fn from_sq(self) -> Square {
+        ((self >> FROM_SQ_SHIFT) & SQUARE_MASK) as Square
+    }
+    /// returns to square of move
+    fn to_sq(self) -> Square {
+        ((self >> TO_SQ_SHIFT) & SQUARE_MASK) as Square
+    }
+    /// return uci representation of move
+    fn uci(self) -> String {
+        format!("{}{}", self.from_sq().uci(), self.to_sq().uci())
+    }
+}
+
 /// Delta enum lists the possible deltas of chess pieces
 pub enum Delta {
     N,
@@ -636,8 +670,8 @@ pub fn get_sliding_mobility(
 
 /// returns bishop mobility
 pub fn bishop_mobility(
-    gen_mode: MoveGenMode,
     sq: Square,
+    gen_mode: MoveGenMode,
     occup_us: Bitboard,
     occup_them: Bitboard,
 ) -> Bitboard {
@@ -654,8 +688,8 @@ pub fn bishop_mobility(
 
 /// returns rook mobility
 pub fn rook_mobility(
-    gen_mode: MoveGenMode,
     sq: Square,
+    gen_mode: MoveGenMode,
     occup_us: Bitboard,
     occup_them: Bitboard,
 ) -> Bitboard {
@@ -672,13 +706,13 @@ pub fn rook_mobility(
 
 /// returns queen mobility
 pub fn queen_mobility(
-    gen_mode: MoveGenMode,
     sq: Square,
+    gen_mode: MoveGenMode,
     occup_us: Bitboard,
     occup_them: Bitboard,
 ) -> Bitboard {
-    bishop_mobility(gen_mode, sq, occup_us, occup_them)
-        | rook_mobility(gen_mode, sq, occup_us, occup_them)
+    bishop_mobility(sq, gen_mode, occup_us, occup_them)
+        | rook_mobility(sq, gen_mode, occup_us, occup_them)
 }
 
 /// returns jump mobility
