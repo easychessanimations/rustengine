@@ -174,9 +174,18 @@ impl Uci {
             return true;
         }
 
-        if command == "perft" {
-            self.linear_game
-                .perft(parts[1].parse().expect("illegal perft depth"));
+        if command == "perft" || command == "p" {
+            let depth = if command == "p" {
+                4
+            } else {
+                parts[1].parse().expect("illegal perft depth")
+            };
+            let perft_result = self.linear_game.perft(depth);
+
+            println!(
+                "node(s) {:?} , time {:.2} sec(s) , nps {} kNode(s)/sec",
+                perft_result.0, perft_result.1, perft_result.2
+            );
         }
 
         if command == "bb" {

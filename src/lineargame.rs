@@ -83,17 +83,12 @@ impl LinearGame {
         }
     }
 
-    pub fn perft(&mut self, depth: usize) {
+    pub fn perft(&mut self, depth: usize) -> (usize, f32, f32) {
         self.nodes = 0;
         let start = Instant::now();
         self.perft_rec(depth);
         let duration = start.elapsed();
         let secs = ((duration.as_secs() as f32) * 1e9 + (duration.subsec_nanos() as f32)) / 1e9;
-        println!(
-            "node(s) {:?} , time {:.2} sec(s) , nps {} kNode(s)/sec",
-            self.nodes,
-            secs,
-            (self.nodes as f32) / secs / 1000.0
-        );
+        (self.nodes, secs, (self.nodes as f32) / secs / 1000.0)
     }
 }
